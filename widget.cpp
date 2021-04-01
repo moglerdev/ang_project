@@ -13,12 +13,8 @@ Widget::Widget(QWidget *parent)
     scene = new Scene(this);
     scene->setSceneRect(-250, -300, 500, 600);
 
-    QGraphicsPixmapItem * bgItem = new QGraphicsPixmapItem(
-                QPixmap(":/Images/background.png"));
-    scene->addItem(bgItem);
-    bgItem->setPos(QPointF(0,0) -
-                   QPointF( bgItem->boundingRect().width()/2,
-                            bgItem->boundingRect().height()/2));
+    scene->init(this->width(), this->height());
+
     ui->graphicsView->setScene(scene);
 }
 
