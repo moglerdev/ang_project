@@ -8,31 +8,30 @@ Player::Player() :
     isWingsUp(true)
 {
     QPixmap map = QPixmap (":/Images/player.png");
-    map = map.scaled(64, 64, Qt::AspectRatioMode::IgnoreAspectRatio);
+    map = map.scaled(24, 24, Qt::AspectRatioMode::IgnoreAspectRatio);
     setPixmap(map);
 
     QTimer * flyingTimer = new QTimer(this);
     connect(flyingTimer, &QTimer::timeout, [=](){
-        updatePlayerFrame();
+        update();
     });
 
     flyingTimer->start(80);
 
     groundPos = scenePos().y() + 290;
 
-    yAnimation = new QPropertyAnimation(this, "y", this);
-    yAnimation->setStartValue(scenePos().y());
-    yAnimation->setEndValue(groundPos);
-    yAnimation->setEasingCurve(QEasingCurve::InQuad);
-    yAnimation->setDuration(1000);
-
-    yAnimation->start();
+    moveAnimation = new QPropertyAnimation(this, "y", this);
+    connect(moveAnimation, &QPropertyAnimation::finished, [=](){
+        if(isFlyUp){
+            isFlyUp = false;
+            this->moveTo(groundPos, MOVE_DOWN_DURATION);
+        }
+    });
 
     rotationAnimation = new QPropertyAnimation(this, "rotation", this);
-    rotateTo(90, 800, QEasingCurve::InQuad);
 }
 
-void Player::updatePlayerFrame(){
+void Player::update(){
     if(wingStatus == WingStatus::Middle){
         if(isWingsUp){
             // Up
@@ -59,6 +58,18 @@ qreal Player::getY() const{
     return m_y;
 }
 
+void Player::activatePlayer()
+{
+    this->moveTo(groundPos, MOVE_DOWN_DURATION);
+    this->rotateTo(90, ROTATE_UP_DURATION, QEasingCurve::InQuad);
+}
+
+void Player::disablePlayer()
+{
+    rotationAnimation->stop();
+    moveAnimation->stop();
+}
+
 void Player::setRotation(qreal angle){
     m_rotation = angle;
     QPointF c = boundingRect().center();
@@ -74,20 +85,25 @@ void Player::setY(qreal y){
     m_y = y;
 }
 
-void Player::fly()
-{
-    yAnimation->stop();
-    rotationAnimation->stop();
-
+void Player::moveTo(const qreal& end, const int& duration, const QEasingCurve& curve){
+    moveAnimation->stop();
     qreal posY = y();
 
-    yAnimation->setStartValue(posY);
-    yAnimation->setEndValue(posY - scene()->sceneRect().height()/8);
-    yAnimation->setEasingCurve(QEasingCurve::OutQuad);
-    yAnimation->setDuration(1000);
-    yAnimation->start();
+    moveAnimation->setStartValue(posY);
+    moveAnimation->setEndValue(end);
+    moveAnimation->setEasingCurve(curve);
+    moveAnimation->setDuration(duration);
 
-    rotateTo(-20, 100, QEasingCurve::OutCubic);
+    moveAnimation->start();
+}
+
+void Player::flyUp()
+{
+    isFlyUp = true;
+    rotationAnimation->stop();
+    qreal posTo = y() - scene()->sceneRect().height() / 10;
+    this->moveTo(posTo, MOVE_UP_DURATION, QEasingCurve::OutQuad);
+    this->rotateTo(-20, 100, QEasingCurve::OutCubic);
 }
 
 void Player::rotateTo(const qreal &end, const int &duration, const QEasingCurve &curve)

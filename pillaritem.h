@@ -14,18 +14,23 @@ public:
     ~PillarItem();
 
     qreal getX() const;
+    void stop();
 
 signals:
+    void collideWithPlayer();
 
 public slots:
     void setX(qreal x);
 
 private:
+    void startAnimation();
+    bool isCollidingWithPlayer();
+
     qreal m_x;
     int yPos;
     QGraphicsPixmapItem * upP;
     QGraphicsPixmapItem * downP;
-    QPropertyAnimation * xAnimation;
+    QPropertyAnimation * moveAnimation;
 };
 
 #endif // PILLARITEM_H

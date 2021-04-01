@@ -15,7 +15,10 @@ class Scene : public QGraphicsScene
 public:
     explicit Scene(QObject *parent = nullptr);
 
-    void init(qreal w, qreal h);
+    void init();
+
+    void startGame();
+    void stopGame();
 signals:
 
 public slots:
@@ -25,7 +28,8 @@ private:
     Player * player;
     QTimer * timer;
 
-    // QGraphicsScene interface
+    bool isPlaying;
+
 protected:
     void keyPressEvent(QKeyEvent *eve);
     void mousePressEvent(QGraphicsSceneMouseEvent *eve);

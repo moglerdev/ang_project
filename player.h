@@ -5,6 +5,12 @@
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
 
+#define MOVE_UP
+#define MOVE_DOWN_DURATION 500
+#define MOVE_UP_DURATION 400
+#define ROTATE_UP_DURATION 800
+#define ROTATE_DOWN_DURATION 800
+
 class Player : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
@@ -16,27 +22,32 @@ public:
     qreal getRotation() const;
     qreal getY() const;
 
+    void activatePlayer();
+    void disablePlayer();
+
 signals:
 
 public slots:
     void setRotation(qreal angle);
     void setY(qreal y);
-    void fly();
+    void flyUp();
     void rotateTo(const qreal &end, const int &duration, const QEasingCurve &curve);
+    void moveTo(const qreal& end, const int& duration = 1000, const QEasingCurve& curve = QEasingCurve::InQuad);
+
 private:
     enum WingStatus {
         Up,
         Middle,
         Down
     };
-    void updatePlayerFrame();
-
+    void update();
     WingStatus wingStatus;
     bool isWingsUp;
+    bool isFlyUp;
     qreal m_rotation;
     qreal m_y;
 
-    QPropertyAnimation * yAnimation;
+    QPropertyAnimation * moveAnimation;
     QPropertyAnimation * rotationAnimation;
 
     qreal groundPos;
