@@ -1,5 +1,7 @@
 #include "scene.h"
 
+#include <QDebug>
+
 Scene::Scene(QObject *parent) : QGraphicsScene(parent)
 {
     isPlaying = false;
@@ -19,6 +21,9 @@ void Scene::init()
     player = new Player();
     addItem(player);
 
+    player->setX(-200);
+    player->setY(0);
+
     setUpPillarTimer();
 }
 
@@ -27,15 +32,18 @@ void Scene::startGame()
     if(!isPlaying){
         QList<QGraphicsItem *> objs = items();
         foreach(QGraphicsItem * obj, objs){
-            delete obj;
+            PillarItem * item = dynamic_cast<PillarItem*>(obj);
+            if(item){
+                delete obj;
+            }
         }
 
-        player = new Player();
-        addItem(player);
+        player->setX(-200);
+        player->setY(0);
 
         isPlaying = true;
         player->activatePlayer();
-        timer->start(1200);
+        timer->start(800);
     }
 }
 
@@ -72,15 +80,24 @@ void Scene::setUpPillarTimer()
 
 void Scene::keyPressEvent(QKeyEvent *eve)
 {
-    if(isPlaying && eve->key() == Qt::Key_Space){
-        player->flyUp();
+    if(isPlaying){
+        if(eve->key() == Qt::Key_Space){
+            player->flyUp();
+        }
+    }else{
+        this->startGame();
     }
+    QGraphicsScene::keyPressEvent(eve);
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *eve)
 {
-    if(isPlaying && eve->button() == Qt::LeftButton){
-        player->flyUp();
+    if(isPlaying){
+        if( eve->button() == Qt::LeftButton){
+            player->flyUp();
+        }
+    }else{
+        this->startGame();
     }
     QGraphicsScene::mousePressEvent(eve);
 }
