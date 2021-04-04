@@ -26,15 +26,8 @@
    <property name="bottomMargin">
     <number>2</number>
    </property>
-   <item row="0" column="0">
+   <item row="3" column="0">
     <widget class="QGraphicsView" name="graphicsView"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QPushButton" name="btnStart">
-     <property name="text">
-      <string>Spiel Starten</string>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>
