@@ -6,7 +6,7 @@
 #include <QPropertyAnimation>
 
 #define MOVE_UP
-#define MOVE_DOWN_DURATION 500
+#define MOVE_DOWN_DURATION 800
 #define MOVE_UP_DURATION 400
 #define ROTATE_UP_DURATION 800
 #define ROTATE_DOWN_DURATION 800
