@@ -68,11 +68,12 @@ bool PillarItem::isCollidingWithPlayer()
     QList<QGraphicsItem*> collindingItems = this->upP->collidingItems();
     collindingItems.append(this->downP->collidingItems());
 
-    foreach(QGraphicsItem * item, collidingItems()){
+    foreach(QGraphicsItem * item, collindingItems){
         Player * player = dynamic_cast<Player*>(item);
         if(player){
             return true;
         }
     }
+
     return false;
 }
