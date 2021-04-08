@@ -9,7 +9,7 @@ HUD::HUD() :
     scoreboard->setScale(100);
 }
 
-void HUD::setMenu(){
+void HUD::setMenu(MenuType menuType){
     qDebug() << "Hello";
     // TODO Set Menu Screen
 }
