@@ -4,11 +4,8 @@
 
 // Konstruktor von der Klasse Scene 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),
-    hud(new HUD()),
-    player(new Player()),
     pillarGenTimer(new QTimer(this))
 {
-    isPlaying = false;
 }
 
 void Scene::init()
@@ -17,22 +14,22 @@ void Scene::init()
     //QGraphicsPixmapItem * bgItem = new QGraphicsPixmapItem(
     //            bg.scaled(this->sceneRect().width(), this->sceneRect().height()));
 
-    QGraphicsRectItem* bgItem = new QGraphicsRectItem();
-    addItem(bgItem);
+    QGraphicsRectItem* bgItem = new QGraphicsRectItem(); // Instanziere bgItem für den Hintergrund als Rectangle
+    addItem(bgItem); //Füge bgItem in die Itempool hinzu
 
-    bgItem->setBrush(Qt::cyan);
-    bgItem->setPos(0, 0);
+    bgItem->setBrush(Qt::cyan); // Ändere die Hintergrundfarbe 
+    bgItem->setPos(0, 0); // Setze die Position
 
-    player = new Player();
-    addItem(player);
+    player = new Player(); // initialisiere Player
+    addItem(player); // füge Player in den Pool hinzu
 
-    player->setX(-200);
+    player->setX(-200); // Positioniere den Spieler
     player->setY(0);
 
-    hud = new HUD();
-    addItem(hud);
+    hud = new HUD(); // initialisere das HUD
+    addItem(hud); // füge es hinzu
 
-    setUpPillarTimer();
+    setUpPillarTimer(); // initialisere den Generator für die Hindernisse
 }
 
 void Scene::startGame()
@@ -40,39 +37,39 @@ void Scene::startGame()
     if(!isPlaying){ 
         // Wenn er NICHT spielt!
 
-        QList<QGraphicsItem *> objs = items();                      // Alle Items in der Scene werden in einer Liste gespeichert
-        foreach(QGraphicsItem * obj, objs){                         //Alle Items einzeln durchgegangen
-            PillarItem * item = dynamic_cast<PillarItem*>(obj);     //über c++ funktion dynamic_cast wird es versucht in PillaerItem Obj umcasten
-            if(item) {                                              // Prüft ob der "dynamic_cast" erfolgreich war,
+        QList<QGraphicsItem *> objs = items(); // Alle Items in der Scene werden in einer Liste gespeichert
+        foreach(QGraphicsItem * obj, objs) { //Alle Items einzeln durchgegangen
+            PillarItem * item = dynamic_cast<PillarItem*>(obj); //über c++ funktion dynamic_cast wird es versucht in PillaerItem Obj umcasten
+            if(item) {  // Prüft ob der "dynamic_cast" erfolgreich war,
                 //wenn erfolgreich, dann wird diese if ausgeführt.
-                delete obj;                                         // PillarItem wird gelöscht
+                delete obj; // PillarItem wird gelöscht
             }
         }
         
-                                                                    // Player wird zurück auf anfangs Position gesetzt.
+        // Player wird zurück auf anfangs Position gesetzt.
         player->setX(-200);
         player->setY(0);
        
-                                                                    // isPlayer wird auf "true" gesetzt
+        // isPlayer wird auf "true" gesetzt
         isPlaying = true; 
-        player->activatePlayer();                                   //Methode von Player -> activatePlayer wird ausgeführt
-        pillarGenTimer->start(800);                                          //Timer für die Pillar generierung wird gestartet
+        player->activatePlayer(); //Methode von Player -> activatePlayer wird ausgeführt
+        pillarGenTimer->start(800); //Timer für die Pillar generierung wird gestartet
 
-        highscore = 0;                                              // Highscore wird auf 0 zurückgesetzt
+        highscore = 0;   // Highscore wird auf 0 zurückgesetzt
     }
 }
 
 void Scene::stopGame()
 {
-    isPlaying = false;                      // 
-    pillarGenTimer->stop();
-    player->disablePlayer();
+    isPlaying = false;  // setze Spiel als beendet
+    pillarGenTimer->stop(); // stoppe den TImer für die Hindernisse
+    player->disablePlayer(); // Deaktiviere den Spieler
 
-    QList<QGraphicsItem *> objs = items();
-    foreach(QGraphicsItem * obj, objs){
-        PillarItem* pillar = dynamic_cast<PillarItem*>(obj);
-        if(pillar){
-            pillar->stop();
+    QList<QGraphicsItem *> objs = items(); // instanziere die Items die im Spiel sind als QListe
+    foreach(QGraphicsItem * obj, objs){ // gehe alle einzelne Items durch
+        PillarItem* pillar = dynamic_cast<PillarItem*>(obj); // Versuche die Items als PillarItem zu konvetiere
+        if(pillar){ // Wenn es konvertiert wurde, 
+            pillar->stop(); // lösche den Pillar / Hinderniss
         }
     }
 }
