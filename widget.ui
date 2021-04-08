@@ -26,6 +26,13 @@
    <property name="bottomMargin">
     <number>2</number>
    </property>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="0">
     <widget class="QGraphicsView" name="graphicsView"/>
    </item>

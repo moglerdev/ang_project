@@ -18,18 +18,24 @@ public:
 
 signals:
     void collideWithPlayer();
+    void playerHitsScore();
 
 public slots:
     void setX(qreal x);
 
 private:
     void startAnimation();
-    bool isCollidingWithPlayer();
+    bool hitPlayerPillar();
+    bool hitPlayerScore();
+
+    bool isScoreHitted;
 
     qreal m_x;
     int yPos;
     QGraphicsPixmapItem * upP;
     QGraphicsPixmapItem * downP;
+    QGraphicsRectItem * scoreBox;
+
     QPropertyAnimation * moveAnimation;
 };
 

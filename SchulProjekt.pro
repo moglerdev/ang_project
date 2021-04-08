@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    hud.cpp \
     main.cpp \
     pillaritem.cpp \
     player.cpp \
@@ -16,6 +17,7 @@ SOURCES += \
     widget.cpp
 
 HEADERS += \
+    hud.h \
     pillaritem.h \
     player.h \
     scene.h \

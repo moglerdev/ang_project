@@ -24,6 +24,8 @@ void Scene::init()
     player->setX(-200);
     player->setY(0);
 
+    hud = new HUD();
+
     setUpPillarTimer();
 }
 
@@ -44,6 +46,8 @@ void Scene::startGame()
         isPlaying = true;
         player->activatePlayer();
         timer->start(800);
+
+        highscore = 0;
     }
 }
 
@@ -62,6 +66,11 @@ void Scene::stopGame()
     }
 }
 
+void Scene::addScore()
+{
+    hud->addScorePoints(1);
+}
+
 void Scene::setUpPillarTimer()
 {
     timer = new QTimer(this);
@@ -72,6 +81,9 @@ void Scene::setUpPillarTimer()
            PillarItem * pillar = new PillarItem();
            connect(pillar, &PillarItem::collideWithPlayer, [=](){
                 stopGame();
+           });
+           connect(pillar, &PillarItem::playerHitsScore, [=](){
+                addScore();
            });
            addItem(pillar);
        }

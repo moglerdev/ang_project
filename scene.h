@@ -8,26 +8,31 @@
 
 #include "pillaritem.h"
 #include "player.h"
+#include "hud.h"
 
 class Scene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit Scene(QObject *parent = nullptr);
+    Scene(QObject *parent = nullptr);
 
     void init();
 
     void startGame();
     void stopGame();
+    void addScore();
+
 signals:
 
 public slots:
 private:
     void setUpPillarTimer();
 
-    Player * player;
-    QTimer * timer;
+    Player *player;
+    HUD *hud;
+    QTimer *timer;
 
+    int highscore = 0;
     bool isPlaying;
 
 protected:
