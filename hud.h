@@ -4,7 +4,7 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsTextItem>
 
-class HUD : public QGraphicsItemGroup
+class HUD : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT
 public:
