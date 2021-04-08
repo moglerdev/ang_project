@@ -1,3 +1,6 @@
 
 *.user.*
 *.user
+/release
+/debug
+/.vs
