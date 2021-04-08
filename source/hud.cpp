@@ -6,6 +6,7 @@ HUD::HUD() :
     addToGroup(scoreboard);
 
     scoreboard->setPos(100, 100);
+    scoreboard->setScale(100);
 }
 
 void HUD::setMenu(){

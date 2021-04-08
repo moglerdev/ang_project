@@ -2,21 +2,25 @@
 
 #include <QDebug>
 
-Scene::Scene(QObject *parent) : QGraphicsScene(parent)
+Scene::Scene(QObject *parent) : QGraphicsScene(parent),
+    hud(new HUD()),
+    player(new Player()),
+    timer(new QTimer(this))
 {
     isPlaying = false;
 }
 
 void Scene::init()
 {
-    QPixmap bg = QPixmap(":/Images/background.png");
-    QGraphicsPixmapItem * bgItem = new QGraphicsPixmapItem(
-                bg.scaled(this->sceneRect().width(), this->sceneRect().height()));
+    //QPixmap bg = QPixmap(":/Images/background.png");
+    //QGraphicsPixmapItem * bgItem = new QGraphicsPixmapItem(
+    //            bg.scaled(this->sceneRect().width(), this->sceneRect().height()));
+
+    QGraphicsRectItem* bgItem = new QGraphicsRectItem();
     addItem(bgItem);
 
-    bgItem->setPos(QPointF(0,0) -
-                   QPointF( bgItem->boundingRect().width()/2,
-                            bgItem->boundingRect().height()/2));
+    bgItem->setBrush(Qt::cyan);
+    bgItem->setPos(0, 0);
 
     player = new Player();
     addItem(player);
@@ -25,6 +29,7 @@ void Scene::init()
     player->setY(0);
 
     hud = new HUD();
+    addItem(hud);
 
     setUpPillarTimer();
 }
@@ -73,7 +78,6 @@ void Scene::addScore()
 
 void Scene::setUpPillarTimer()
 {
-    timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [=](){
        if(!isPlaying){
             timer->stop();
@@ -99,7 +103,7 @@ void Scene::keyPressEvent(QKeyEvent *eve)
     }else{
         this->startGame();
     }
-    QGraphicsScene::keyPressEvent(eve);
+    //QGraphicsScene::keyPressEvent(eve);
 }
 
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *eve)
@@ -111,5 +115,5 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *eve)
     }else{
         this->startGame();
     }
-    QGraphicsScene::mousePressEvent(eve);
+    //QGraphicsScene::mousePressEvent(eve);
 }

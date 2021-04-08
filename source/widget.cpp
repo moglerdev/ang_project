@@ -6,7 +6,7 @@
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
-    , ui(new Ui::Widget)
+    , ui(new Ui::Widget())
 {
     ui->setupUi(this);
     scene = new Scene(this);
@@ -15,7 +15,6 @@ Widget::Widget(QWidget *parent)
     scene->init();
 
     ui->graphicsView->setScene(scene);
-
     this->setFixedSize(510, 610);
 }
 

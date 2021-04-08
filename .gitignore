@@ -1,6 +1,7 @@
 
 *.user.*
 *.user
-/release
-/debug
-/.vs
+/build/*
+.vs
+debug
+release
