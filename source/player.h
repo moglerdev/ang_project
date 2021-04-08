@@ -14,6 +14,9 @@
 #define ROTATE_UP_DURATION 800
 #define ROTATE_DOWN_DURATION 800
 
+/// <summary>
+/// Klasse für den Spieler
+/// </summary>
 class Player : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT

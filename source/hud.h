@@ -4,21 +4,47 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsTextItem>
 
+
+/// <summary>
+/// Klasse für die Menü Anzeige, Scoreboard, etc.
+/// </summary>
 class HUD : public QObject, public QGraphicsItemGroup
 {
-    Q_OBJECT
+    Q_OBJECT // The Q_OBJECT macro must appear in the private section of a class definition that declares its own signals and slots or that uses other services provided by Qt's meta-object system.
 public:
-    explicit HUD();
+    /// <summary>
+    /// Für die Menüanzeige 
+    /// </summary>
+    enum MenuType {
+        Start,
+        Pause,
+        GameOver
+    };
 
-    void setMenu();
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
+    explicit HUD(); 
+    /// <summary>
+    /// Zeigt Menü an
+    /// </summary>
+    /// <param name="menuType">Welches Menü angezeigt werden soll; HUD::MenuType</param>
+    void setMenu(MenuType menuType);
+    /// <summary>
+    /// Zeigt GameOver screen
+    /// </summary>
     void setGameOver();
+    /// <summary>
+    /// Fügt Punkte zum Scoreboard hinzu
+    /// </summary>
+    /// <param name="add">wie viele Punkte sollen hinzugefügt werden</param>
     void addScorePoints(int add);
 
 signals:
 
 private:
-    int scorePoints = 0;
-    QGraphicsTextItem* scoreboard;
+    int scorePoints = 0; // aktuelles Punktzahl
+    QGraphicsTextItem* scoreboard; // GrahicsItem für die Punkteanzeige als Text
 
     // TODO Menu
     // TODO GameOver
