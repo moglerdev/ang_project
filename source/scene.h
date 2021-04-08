@@ -6,7 +6,7 @@
 #include <QKeyEvent>
 #include <QTimer>
 
-#include "pillaritem.h"
+#include "pillaritem.h" 
 #include "player.h"
 #include "hud.h"
 
@@ -30,7 +30,7 @@ private:
 
     Player *player;
     HUD *hud;
-    QTimer *timer;
+    QTimer * pillarGenTimer;
 
     int highscore = 0;
     bool isPlaying;
