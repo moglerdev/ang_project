@@ -16,7 +16,7 @@ class Scene : public QGraphicsScene
 public:
     Scene(QObject *parent = nullptr);
 
-    void init();
+    void setup();
 
     void startGame();
     void stopGame();

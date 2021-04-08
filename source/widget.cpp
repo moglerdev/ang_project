@@ -8,23 +8,17 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget())
 {
-    ui->setupUi(this);
-    scene = new Scene(this);
-    scene->setSceneRect(-250, -300, 500, 600);
+    ui->setupUi(this); // richtet die UI ein, mit dem speziellen Widget 
+    scene = new Scene(this); // instanziere die Scene mit dem Paramter "sich selbst"
+    scene->setSceneRect(-250, -300, 500, 600); // Setzt die Größe und Position der Scene
 
-    scene->init();
+    scene->setup(); // passt und richtet alle Objekt ein, für die erste Ausführung
 
-    ui->graphicsView->setScene(scene);
-    this->setFixedSize(510, 610);
+    ui->graphicsView->setScene(scene); // Setzt generierte als aktuelle Scene 
+    this->setFixedSize(510, 610); // Setzt die Fenstergröße fest (nicht veränderbar)
 }
 
 Widget::~Widget()
 {
-    delete ui;
-}
-
-
-void Widget::on_btnStart_clicked()
-{
-    scene->startGame();
+    delete ui; // Wenn der Desktrutor ausgelöst wird, soll die UI (hart) gelöscht werden
 }

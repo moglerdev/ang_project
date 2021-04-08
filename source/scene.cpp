@@ -8,7 +8,7 @@ Scene::Scene(QObject *parent) : QGraphicsScene(parent),
 {
 }
 
-void Scene::init()
+void Scene::setup()
 {
     //QPixmap bg = QPixmap(":/Images/background.png");
     //QGraphicsPixmapItem * bgItem = new QGraphicsPixmapItem(
