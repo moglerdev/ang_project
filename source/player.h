@@ -1,6 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include <QTimer>
+#include <QDebug>
+#include <QGraphicsScene>
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
@@ -35,14 +38,14 @@ public slots:
     void moveTo(const qreal& end, const int& duration = 1000, const QEasingCurve& curve = QEasingCurve::InQuad);
 
 private:
-    enum WingStatus {
+    enum WingSpriteStatus {
         Up,
         Middle,
         Down
     };
-    void update();
-    WingStatus wingStatus;
-    bool isWingsUp;
+    void updateSprite();
+    WingSpriteStatus wingStatus;
+    bool isSpriteWingGoingUp;
     bool isFlyUp;
     qreal m_rotation;
     qreal m_y;

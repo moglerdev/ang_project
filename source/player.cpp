@@ -1,83 +1,76 @@
 #include "player.h"
-#include <QTimer>
-#include <QDebug>
-#include <QGraphicsScene>
 
+// Konstruktor von Player Klasse
 Player::Player() :
-    wingStatus(WingStatus::Up),
-    isWingsUp(true)
+    wingStatus(WingSpriteStatus::Middle) // wingStatus wird initialisiert
 {
-    QPixmap map = QPixmap (":/Images/player.png");
-    map = map.scaled(24, 24, Qt::AspectRatioMode::IgnoreAspectRatio);
-    setPixmap(map);
+    QPixmap map = QPixmap (":/Images/player.png"); // Player Sprite wird geladen
+    map = map.scaled(24, 24, Qt::AspectRatioMode::IgnoreAspectRatio); // Sprite wird an größe angepasst, dabei wird Aspekt nicht beachtet
+    setPixmap(map); // Vom Objekt Player wird der bearbeite Sprite gesetzt 
 
-    QTimer * flyingTimer = new QTimer(this);
-    connect(flyingTimer, &QTimer::timeout, [=](){
-        update();
+    QTimer * flyingTimer = new QTimer(this); // Flying Timer wird deklariert und initialisiert
+    connect(flyingTimer, &QTimer::timeout, [=](){ // TimeOut Signal wird connected,
+        updateSprite(); // Lamda Funktion fürd "update" methode aus
     });
 
-    flyingTimer->start(80);
+    flyingTimer->start(80); // Timer wird gestartet mit 80ms
 
-    groundPos = scenePos().y() + 290;
+    groundPos = scenePos().y() + 290; // Position des Bodens
 
-    moveAnimation = new QPropertyAnimation(this, "y", this);
-    connect(moveAnimation, &QPropertyAnimation::finished, [=](){
-        if(isFlyUp){
-            isFlyUp = false;
-            this->moveTo(groundPos, MOVE_DOWN_DURATION);
+    moveAnimation = new QPropertyAnimation(this, "y", this); // Animation für die Bewegung / Movement
+    connect(moveAnimation, &QPropertyAnimation::finished, [=](){ // Führe die Lamda Funktion, wenn die Animation fertig ist.
+        if(isFlyUp){ // ist er hochfliegen?
+            isFlyUp = false; // fliegt er runter?
+            this->moveTo(groundPos, MOVE_DOWN_DURATION); // führe die Methode aus das er Runterfliegen soll
         }
     });
 
-    rotationAnimation = new QPropertyAnimation(this, "rotation", this);
+    rotationAnimation = new QPropertyAnimation(this, "rotation", this); // initialisiere die Animation führ das Rotieren des Spielers
 }
 
-void Player::update(){
-    if(wingStatus == WingStatus::Middle){
-        if(isWingsUp){
-            // Up
-            // set Pixmap Up
-            wingStatus = WingStatus::Up;
-            isWingsUp = false;
-        }else{
-            // Down
-            //set Pixmap Down
-            wingStatus = WingStatus::Down;
-            isWingsUp = true;
+void Player::updateSprite(){
+    if(wingStatus == WingSpriteStatus::Middle) { // Ist Sprite Flügel mittig?
+        if (isSpriteWingGoingUp) { // Ist die Flügelanimation gerade nach oben
+            wingStatus = WingSpriteStatus::Up; // Setze Sprite Status auf Up
+            isSpriteWingGoingUp = false; // Animation geht wieder nach "unten"
+        } else { // Die Flügelanimation ist geht nach unten
+            wingStatus = WingSpriteStatus::Down; // Setze Sprite Status auf Down
+            isSpriteWingGoingUp = true; // Animation geht wieder nach "oben"
         }
-    }else{
-        setRotation(0.0f);
-        wingStatus = WingStatus::Middle;
+    } else { // Wenn Wing Status nicht "Middle" ist
+        setRotation(0.0f); // Setzte Rotation zurück
+        wingStatus = WingSpriteStatus::Middle; // Setze Wing Status auf "Middle"
     }
 }
 
-qreal Player::getRotation() const{
-    return m_rotation;
+qreal Player::getRotation() const {
+    return m_rotation; // gibt aktuelle Position zurück
 }
 
 qreal Player::getY() const{
-    return m_y;
+    return m_y; // gibt aktuelle Höhe / Position der Y-Achse zurück
 }
 
 void Player::activatePlayer()
 {
-    this->moveTo(groundPos, MOVE_DOWN_DURATION);
-    this->rotateTo(90, ROTATE_UP_DURATION, QEasingCurve::InQuad);
+    this->moveTo(groundPos, MOVE_DOWN_DURATION); // aktiviere die Move Animation
+    this->rotateTo(90, ROTATE_UP_DURATION, QEasingCurve::InQuad); // aktiviere die Roations Animation
 }
 
 void Player::disablePlayer()
 {
-    rotationAnimation->stop();
-    moveAnimation->stop();
+    rotationAnimation->stop(); // Stopt die Rotations Animation
+    moveAnimation->stop(); // Stopt die Animation für die Bewegung
 }
 
 void Player::setRotation(qreal angle){
-    m_rotation = angle;
-    QPointF c = boundingRect().center();
-    QTransform t;
-    t.translate(c.x(), c.y());
-    t.rotate(angle);
-    t.translate(-c.x(), -c.y());
-    setTransform(t);
+    m_rotation = angle; // setzte aktuelle Rotation
+    QPointF c = boundingRect().center(); // gibt die Position vom Mittelpunkt zurück
+    QTransform t = QTransform(); //Transformiert das Koordinatensystem zum Bezugsystem
+    t.translate(c.x(), c.y()); // Setzte c als Bezugsystem 
+    t.rotate(angle); // rotiere das Objekt
+    t.translate(-c.x(), -c.y()); // Übersetzte das System zurück zum Ursprung
+    setTransform(t); // setzt angepasste Transformation
 }
 
 void Player::setY(qreal y){
@@ -86,34 +79,37 @@ void Player::setY(qreal y){
 }
 
 void Player::moveTo(const qreal& end, const int& duration, const QEasingCurve& curve){
-    moveAnimation->stop();
-    qreal posY = y();
+    moveAnimation->stop(); // Stoppe aktuelle Bewegungs-Animation
+    qreal posY = y(); // erhalte aktuelle y-Position 
 
-    moveAnimation->setStartValue(posY);
-    moveAnimation->setEndValue(end);
-    moveAnimation->setEasingCurve(curve);
-    moveAnimation->setDuration(duration);
+    moveAnimation->setStartValue(posY); // Setzte Startpunkt für die Animation (aktuelle y Pos)
+    moveAnimation->setEndValue(end); // Setzte Endpunkt der Animation (end Parameter)
+    moveAnimation->setEasingCurve(curve); // Setze Funktion [Linear, Quadtratisch, Expotentiel, etc.] (curve Parameter)
+    moveAnimation->setDuration(duration); // Wie lange die Animation dauern soll, in Millisekunden (duration Parameter)
 
-    moveAnimation->start();
+    moveAnimation->start(); // Animation soll gestartet werden
 }
 
 void Player::flyUp()
 {
-    isFlyUp = true;
-    rotationAnimation->stop();
-    qreal posTo = y() - scene()->sceneRect().height() / 10;
-    this->moveTo(posTo, MOVE_UP_DURATION, QEasingCurve::OutQuad);
-    this->rotateTo(-20, 100, QEasingCurve::OutCubic);
+    isFlyUp = true; // Spieler setzen das er hochfliegt
+    rotationAnimation->stop(); // Rotations Animation stoppen
+    // Position wohin der Spieler fliegen soll. 
+    qreal posTo = y() - scene()->sceneRect().height() / 10; //Dabei wird die aktuelle Szene vom Spiel um deren Höhe als Bezugsystem zu verwenden.
+    this->moveTo(posTo, MOVE_UP_DURATION, QEasingCurve::OutQuad); // Der Spieler soll umgekehrt Quadtratisch in "MOVE_UP_DURATION" ms zur Position "posTo"
+    this->rotateTo(-20, 100, QEasingCurve::OutCubic); //Der Spieler soll -20 rotieren in 100ms umgekehrt Kubikisch
 }
 
 void Player::rotateTo(const qreal &end, const int &duration, const QEasingCurve &curve)
 {
-    rotationAnimation->setStartValue(this->rotation());
-    rotationAnimation->setEndValue(end);
-    rotationAnimation->setEasingCurve(curve);
-    rotationAnimation->setDuration(duration);
+    rotationAnimation->stop(); // Stoppe aktuelle Rotations Animation
 
-    rotationAnimation->start();
+    rotationAnimation->setStartValue(this->rotation()); // Setze aktuelle Rotations als Startposition
+    rotationAnimation->setEndValue(end); // Setze Parameter "end" als Endzustand
+    rotationAnimation->setEasingCurve(curve); // Funktionskurve für die Animation
+    rotationAnimation->setDuration(duration); // Wie lange die Animation dauern soll
+
+    rotationAnimation->start(); // Animation ausführen
 }
 
 
