@@ -5,15 +5,15 @@
 
 #include "player.h"
 
-PillarItem::PillarItem() :
+PillarItem::PillarItem(bool stopAnimation) :
     isScoreHitted(false),
     upP(new QGraphicsPixmapItem(QPixmap(":/Images/pillar.png"))),
     downP(new QGraphicsPixmapItem(QPixmap(":/Images/pillar.png"))),
-    scoreBox(new QGraphicsRectItem(0, -60, 10, 120))
+    scoreBox(new QGraphicsRectItem(0, 0, 10, 500))
 {
     addToGroup(upP);
     addToGroup(downP);
-    //addToGroup(scoreBox);
+    addToGroup(scoreBox);
 
     upP->setPos(
         QPointF(upP->boundingRect().width() / -2,
@@ -28,10 +28,15 @@ PillarItem::PillarItem() :
         )
     );
 
+    scoreBox->setPos(
+        QPointF(10, 0)
+    );
+
     //DEBUG
     scoreBox->setBrush(Qt::red);
-
-    this->startAnimation();
+    if (!stopAnimation) {
+        this->startAnimation();
+    }
 }
 
 PillarItem::~PillarItem(){

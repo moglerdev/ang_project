@@ -16,7 +16,7 @@ public:
     /// <summary>
     /// Konstruktor
     /// </summary>
-    explicit PillarItem();
+    explicit PillarItem(bool stopAnimation = false);
     ~PillarItem();
     /// <summary>
     /// Gibt aktuelle Position der X-Achse zurück

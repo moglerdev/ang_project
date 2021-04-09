@@ -26,6 +26,9 @@ void Scene::setup()
 
     player = new Player(); // initialisiere Player
     addItem(player); // füge Player in den Pool hinzu
+
+    //PillarItem* pillar = new PillarItem(true); // Hinderniss wird deklariert und initialisiert
+    //addItem(pillar); // Hinderniss in die Scene hinzufügen
     
     setupGenerator(); // initialisere den Generator für die Hindernisse
 }
