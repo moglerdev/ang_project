@@ -5,25 +5,38 @@
 
 #include "player.h"
 
-PillarItem::PillarItem() :
+PillarItem::PillarItem(bool stopAnimation) :
     isScoreHitted(false),
     upP(new QGraphicsPixmapItem(QPixmap(":/Images/pillar.png"))),
     downP(new QGraphicsPixmapItem(QPixmap(":/Images/pillar.png"))),
-    scoreBox(new QGraphicsRectItem(0, -60, 10, 120))
+    scoreBox(new QGraphicsRectItem(0, 0, 10, 500))
 {
     addToGroup(upP);
     addToGroup(downP);
     addToGroup(scoreBox);
 
-    upP->setPos(QPointF(0,0) - QPointF(upP->boundingRect().width()/2,
-                                       upP->boundingRect().height()+60));
+    upP->setPos(
+        QPointF(upP->boundingRect().width() / -2,
+            (-1 * downP->boundingRect().height()) + 100
+        )
+    );
+
     downP->setRotation(180.0f);
-    downP->setPos(QPointF(downP->boundingRect().width()/2,
-                          downP->boundingRect().height()+60));
+    downP->setPos(
+        QPointF(downP->boundingRect().width() / 2,
+            (downP->boundingRect().height()) + 300
+        )
+    );
+
+    scoreBox->setPos(
+        QPointF(10, 0)
+    );
+
     //DEBUG
     scoreBox->setBrush(Qt::red);
-
-    this->startAnimation();
+    if (!stopAnimation) {
+        this->startAnimation();
+    }
 }
 
 PillarItem::~PillarItem(){
@@ -38,7 +51,7 @@ void PillarItem::startAnimation(){
     yPos = QRandomGenerator::global()->bounded(150);
     int randXPos = QRandomGenerator::global()->bounded(200);
 
-    setPos(QPoint(0,0) + QPoint(260 + randXPos, yPos));
+    setPos(QPoint(0,0) + QPoint(500 + randXPos, yPos));
 
     moveAnimation = new QPropertyAnimation(this, "x", this);
 
@@ -47,9 +60,9 @@ void PillarItem::startAnimation(){
         delete this;
     });
 
-    moveAnimation->setStartValue(260 + randXPos);
+    moveAnimation->setStartValue(500 + randXPos);
     moveAnimation->setDuration(1500);
-    moveAnimation->setEndValue(-260);
+    moveAnimation->setEndValue(-20);
     moveAnimation->setEasingCurve(QEasingCurve::Linear);
 
     moveAnimation->start();

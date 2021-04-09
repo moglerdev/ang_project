@@ -11,12 +11,12 @@
 class PillarItem : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT // The Q_OBJECT macro must appear in the private section of a class definition that declares its own signals and slots or that uses other services provided by Qt's meta-object system.
-    Q_PROPERTY(qreal x READ x WRITE setX) // This macro is used for declaring properties in classes that inherit QObject. Properties behave like class data members, but they have additional features accessible through the Meta-Object System.
+    Q_PROPERTY(qreal x READ getX WRITE setX) // This macro is used for declaring properties in classes that inherit QObject. Properties behave like class data members, but they have additional features accessible through the Meta-Object System.
 public:
     /// <summary>
     /// Konstruktor
     /// </summary>
-    explicit PillarItem();
+    explicit PillarItem(bool stopAnimation = false);
     ~PillarItem();
     /// <summary>
     /// Gibt aktuelle Position der X-Achse zurück

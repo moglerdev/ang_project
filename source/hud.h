@@ -39,6 +39,11 @@ public:
     /// </summary>
     /// <param name="add">wie viele Punkte sollen hinzugefügt werden</param>
     void addScorePoints(int add);
+    /// <summary>
+    /// Fügt Punkte zum Scoreboard hinzu
+    /// </summary>
+    /// <param name="add">wie viele Punkte sollen hinzugefügt werden</param>
+    void setScorePoints(int val);
 
 signals:
 
@@ -46,6 +51,11 @@ private:
     int scorePoints = 0; // aktuelles Punktzahl
     QGraphicsTextItem* scoreboard; // GrahicsItem für die Punkteanzeige als Text
 
+    /// <summary>
+    /// Fügt Punkte zum Scoreboard hinzu
+    /// </summary>
+    /// <param name="add">wie viele Punkte sollen hinzugefügt werden</param>
+    void updateScoreboard();
     // TODO Menu
     // TODO GameOver
 

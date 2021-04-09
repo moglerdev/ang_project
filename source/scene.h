@@ -23,19 +23,21 @@ public:
     void addScore();
 
 signals:
+    void returnCords(QPointF pos);
 
 public slots:
 private:
-    void setUpPillarTimer();
+    void setupGenerator();
 
     Player *player;
     HUD *hud;
-    QTimer * pillarGenTimer;
+    QTimer * pillarGeneratorTimer;
 
     int highscore = 0;
     bool isPlaying;
 
 protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
     void keyPressEvent(QKeyEvent *eve);
     void mousePressEvent(QGraphicsSceneMouseEvent *eve);
 };
