@@ -33,7 +33,7 @@ PillarItem::PillarItem(bool stopAnimation) :
     );
 
     //DEBUG
-    scoreBox->setBrush(Qt::red);
+   // scoreBox->setBrush(Qt::red);
     if (!stopAnimation) {
         this->startAnimation();
     }
