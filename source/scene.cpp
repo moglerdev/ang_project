@@ -14,21 +14,18 @@ void Scene::setup()
     //QGraphicsPixmapItem * bgItem = new QGraphicsPixmapItem(
     //            bg.scaled(this->sceneRect().width(), this->sceneRect().height()));
 
-    QGraphicsRectItem* bgItem = new QGraphicsRectItem(); // Instanziere bgItem für den Hintergrund als Rectangle
+    
+    QGraphicsRectItem* bgItem = new QGraphicsRectItem(-20, -20, 1000, 1000); // Instanziere bgItem für den Hintergrund als Rectangle
     addItem(bgItem); //Füge bgItem in die Itempool hinzu
 
-    bgItem->setBrush(Qt::cyan); // Ändere die Hintergrundfarbe 
-    bgItem->setPos(0, 0); // Setze die Position
-
-    player = new Player(); // initialisiere Player
-    addItem(player); // füge Player in den Pool hinzu
-
-    player->setX(-200); // Positioniere den Spieler
-    player->setY(0);
+    bgItem->setBrush(Qt::black); // Ändere die Hintergrundfarbe 
 
     hud = new HUD(); // initialisere das HUD
     addItem(hud); // füge es hinzu
 
+    player = new Player(); // initialisiere Player
+    addItem(player); // füge Player in den Pool hinzu
+    
     setUpPillarTimer(); // initialisere den Generator für die Hindernisse
 }
 
@@ -36,6 +33,8 @@ void Scene::startGame()
 {
     if(!isPlaying){ 
         // Wenn er NICHT spielt!
+        // isPlayer wird auf "true" gesetzt
+        isPlaying = true;
 
         QList<QGraphicsItem *> objs = items(); // Alle Items in der Scene werden in einer Liste gespeichert
         foreach(QGraphicsItem * obj, objs) { //Alle Items einzeln durchgegangen
@@ -47,11 +46,8 @@ void Scene::startGame()
         }
         
         // Player wird zurück auf anfangs Position gesetzt.
-        player->setX(-200);
-        player->setY(0);
-       
-        // isPlayer wird auf "true" gesetzt
-        isPlaying = true; 
+        //player->setX(10);
+
         player->activatePlayer(); //Methode von Player -> activatePlayer wird ausgeführt
         pillarGenTimer->start(800); //Timer für die Pillar generierung wird gestartet
 
@@ -89,15 +85,22 @@ void Scene::setUpPillarTimer()
        }else{
            // wenn das Spiel ausgeführt wird
            PillarItem * pillar = new PillarItem(); // Hinderniss wird deklariert und initialisiert
+           addItem(pillar); // Hinderniss in die Scene hinzufügen
            connect(pillar, &PillarItem::collideWithPlayer, [=](){ // Signal collideWithPlayer verbinden
                 stopGame(); // Game soll gestoppt werden
            });
            connect(pillar, &PillarItem::playerHitsScore, [=](){ // Signal playerHitsScore verbinden
                 addScore(); // Scoreboard soll einpunkt hinzugefügt werden
            });
-           addItem(pillar); // Hinderniss in die Scene hinzufügen
        }
     });
+}
+
+// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+{
+    emit returnCords(mouseEvent->scenePos());
+    //QGraphicsScene::keyPressEvent(eve);
 }
 
 // Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
