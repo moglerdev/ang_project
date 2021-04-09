@@ -2,12 +2,21 @@
 
 // Konstruktor von Player Klasse
 Player::Player() :
-    wingStatus(WingSpriteStatus::Middle) // wingStatus wird initialisiert
+    wingStatus(WingSpriteStatus::Middle), // wingStatus wird initialisiert
+    sprite(new QGraphicsPixmapItem)
 {
     QPixmap map = QPixmap (":/Images/player.png"); // Player Sprite wird geladen
     map = map.scaled(24, 24, Qt::AspectRatioMode::IgnoreAspectRatio); // Sprite wird an größe angepasst, dabei wird Aspekt nicht beachtet
-    setPixmap(map); // Vom Objekt Player wird der bearbeite Sprite gesetzt 
+    sprite->setPixmap(map); // Vom Objekt Player wird der bearbeite Sprite gesetzt 
 
+    addToGroup(sprite);
+    /*
+    QRect t = map.rect();
+    
+    QGraphicsRectItem* rect = new QGraphicsRectItem(0, 0, t.width(), t.height());
+    rect->setBrush(Qt::black);
+    addToGroup(rect);
+    */
     QTimer * flyingTimer = new QTimer(this); // Flying Timer wird deklariert und initialisiert
     connect(flyingTimer, &QTimer::timeout, [=](){ // TimeOut Signal wird connected,
         updateSprite(); // Lamda Funktion fürd "update" methode aus
@@ -15,13 +24,13 @@ Player::Player() :
 
     flyingTimer->start(80); // Timer wird gestartet mit 80ms
 
-    groundPos = scenePos().y() + 290; // Position des Bodens
+    groundPos = scenePos().y() + 620;// Position des Bodens
 
     moveAnimation = new QPropertyAnimation(this, "y", this); // Animation für die Bewegung / Movement
     connect(moveAnimation, &QPropertyAnimation::finished, [=](){ // Führe die Lamda Funktion, wenn die Animation fertig ist.
-        if(isFlyUp){ // ist er hochfliegen?
-            isFlyUp = false; // fliegt er runter?
-            this->moveTo(groundPos, MOVE_DOWN_DURATION); // führe die Methode aus das er Runterfliegen soll
+        if(isFlyUp){ // fliegt der Spieler hoch?
+            isFlyUp = false; // Er fliegt jetzt runter
+            this->moveTo(groundPos, MOVE_DOWN_DURATION, QEasingCurve::InQuad); // führe die Methode aus das er Runterfliegen soll
         }
     });
 
@@ -53,7 +62,7 @@ qreal Player::getY() const{
 
 void Player::activatePlayer()
 {
-    this->moveTo(groundPos, MOVE_DOWN_DURATION); // aktiviere die Move Animation
+    this->moveTo(groundPos, MOVE_DOWN_DURATION, QEasingCurve::InQuad); // aktiviere die Move Animation
     this->rotateTo(90, ROTATE_UP_DURATION, QEasingCurve::InQuad); // aktiviere die Roations Animation
 }
 
@@ -74,13 +83,22 @@ void Player::setRotation(qreal angle){
 }
 
 void Player::setY(qreal y){
-    moveBy(0, y-m_y);
+    if (y < 0) { // TODO GameOver
+        y = 0;
+    }
+    else if (y > GROUND_POS) { // TODO GameOver
+        y = 0;
+    }
+    setPos(QPointF(pos().x(), 0) + QPointF(0, y));
+    //qDebug() << pos();
     m_y = y;
 }
 
 void Player::moveTo(const qreal& end, const int& duration, const QEasingCurve& curve){
     moveAnimation->stop(); // Stoppe aktuelle Bewegungs-Animation
     qreal posY = y(); // erhalte aktuelle y-Position 
+
+    qDebug() << "Hey" << end;
 
     moveAnimation->setStartValue(posY); // Setzte Startpunkt für die Animation (aktuelle y Pos)
     moveAnimation->setEndValue(end); // Setzte Endpunkt der Animation (end Parameter)
@@ -95,7 +113,8 @@ void Player::flyUp()
     isFlyUp = true; // Spieler setzen das er hochfliegt
     rotationAnimation->stop(); // Rotations Animation stoppen
     // Position wohin der Spieler fliegen soll. 
-    qreal posTo = y() - scene()->sceneRect().height() / 10; //Dabei wird die aktuelle Szene vom Spiel um deren Höhe als Bezugsystem zu verwenden.
+    qreal posTo = scenePos().y() - 120; //Dabei wird die aktuelle Szene vom Spiel um deren Höhe als Bezugsystem zu verwenden.
+    qDebug() << "Okay" << posTo;
     this->moveTo(posTo, MOVE_UP_DURATION, QEasingCurve::OutQuad); // Der Spieler soll umgekehrt Quadtratisch in "MOVE_UP_DURATION" ms zur Position "posTo"
     this->rotateTo(-20, 100, QEasingCurve::OutCubic); //Der Spieler soll -20 rotieren in 100ms umgekehrt Kubikisch
 }

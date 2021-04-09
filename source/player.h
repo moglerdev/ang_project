@@ -9,15 +9,16 @@
 #include <QPropertyAnimation>
 
 #define MOVE_UP
-#define MOVE_DOWN_DURATION 800
+#define MOVE_DOWN_DURATION 1500
 #define MOVE_UP_DURATION 400
 #define ROTATE_UP_DURATION 800
 #define ROTATE_DOWN_DURATION 800
+#define GROUND_POS 620
 
 /// <summary>
 /// Klasse für den Spieler
 /// </summary>
-class Player : public QObject, public QGraphicsPixmapItem
+class Player : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT
     Q_PROPERTY(qreal rotation READ getRotation WRITE setRotation)
@@ -38,7 +39,7 @@ public slots:
     void setY(qreal y);
     void flyUp();
     void rotateTo(const qreal &end, const int &duration, const QEasingCurve &curve);
-    void moveTo(const qreal& end, const int& duration = 1000, const QEasingCurve& curve = QEasingCurve::InQuad);
+    void moveTo(const qreal& end, const int& duration, const QEasingCurve& curve);
 
 private:
     enum WingSpriteStatus {
@@ -52,6 +53,8 @@ private:
     bool isFlyUp;
     qreal m_rotation;
     qreal m_y;
+
+    QGraphicsPixmapItem* sprite;
 
     QPropertyAnimation * moveAnimation;
     QPropertyAnimation * rotationAnimation;
