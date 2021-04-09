@@ -28,6 +28,7 @@ PillarItem::PillarItem(bool stopAnimation) :
         )
     );
 
+    scoreBox->setVisible(false);
     scoreBox->setPos(
         QPointF(10, 0)
     );

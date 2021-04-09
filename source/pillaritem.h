@@ -67,7 +67,7 @@ private:
 
     QGraphicsPixmapItem * upP;  // Röhre Oben
     QGraphicsPixmapItem * downP; // Röhre Unten
-    QGraphicsRectItem * scoreBox; // ScoreBox ( für die Punkte )
+    QGraphicsRectItem* scoreBox; // ScoreBox ( für die Punkte )
 
     QPropertyAnimation * moveAnimation; // Animation für die Bewegung nach Links
 };
