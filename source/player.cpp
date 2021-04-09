@@ -83,11 +83,8 @@ void Player::setRotation(qreal angle){
 }
 
 void Player::setY(qreal y){
-    if (y < 0) { // TODO GameOver
-        y = 0;
-    }
-    else if (y > GROUND_POS) { // TODO GameOver
-        y = 0;
+    if (y < 0 || y > GROUND_POS) { // TODO GameOver
+        emit gameOver();
     }
     setPos(QPointF(pos().x(), 0) + QPointF(0, y));
     //qDebug() << pos();
@@ -97,8 +94,6 @@ void Player::setY(qreal y){
 void Player::moveTo(const qreal& end, const int& duration, const QEasingCurve& curve){
     moveAnimation->stop(); // Stoppe aktuelle Bewegungs-Animation
     qreal posY = y(); // erhalte aktuelle y-Position 
-
-    qDebug() << "Hey" << end;
 
     moveAnimation->setStartValue(posY); // Setzte Startpunkt für die Animation (aktuelle y Pos)
     moveAnimation->setEndValue(end); // Setzte Endpunkt der Animation (end Parameter)
@@ -114,7 +109,6 @@ void Player::flyUp()
     rotationAnimation->stop(); // Rotations Animation stoppen
     // Position wohin der Spieler fliegen soll. 
     qreal posTo = scenePos().y() - 120; //Dabei wird die aktuelle Szene vom Spiel um deren Höhe als Bezugsystem zu verwenden.
-    qDebug() << "Okay" << posTo;
     this->moveTo(posTo, MOVE_UP_DURATION, QEasingCurve::OutQuad); // Der Spieler soll umgekehrt Quadtratisch in "MOVE_UP_DURATION" ms zur Position "posTo"
     this->rotateTo(-20, 100, QEasingCurve::OutCubic); //Der Spieler soll -20 rotieren in 100ms umgekehrt Kubikisch
 }

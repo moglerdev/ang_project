@@ -13,7 +13,7 @@
 #define MOVE_UP_DURATION 400
 #define ROTATE_UP_DURATION 800
 #define ROTATE_DOWN_DURATION 800
-#define GROUND_POS 620
+#define GROUND_POS 588
 
 /// <summary>
 /// Klasse für den Spieler
@@ -33,6 +33,7 @@ public:
     void disablePlayer();
 
 signals:
+    void gameOver();
 
 public slots:
     void setRotation(qreal angle);

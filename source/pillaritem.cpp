@@ -28,12 +28,13 @@ PillarItem::PillarItem(bool stopAnimation) :
         )
     );
 
+    scoreBox->setVisible(false);
     scoreBox->setPos(
         QPointF(10, 0)
     );
 
     //DEBUG
-    scoreBox->setBrush(Qt::red);
+   // scoreBox->setBrush(Qt::red);
     if (!stopAnimation) {
         this->startAnimation();
     }

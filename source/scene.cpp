@@ -19,13 +19,24 @@ void Scene::setup()
     QGraphicsRectItem* bgItem = new QGraphicsRectItem(-20, -20, 1000, 1000); // Instanziere bgItem für den Hintergrund als Rectangle
     addItem(bgItem); //Füge bgItem in die Itempool hinzu
 
-    bgItem->setBrush(Qt::black); // Ändere die Hintergrundfarbe 
+    bgItem->setVisible(false);
+    bgItem->setBrush(Qt::transparent); // Ändere die Hintergrundfarbe 
+    QPen p = QPen(Qt::transparent, 1);
+    bgItem->setPen(p);
 
     player = new Player(); // initialisiere Player
     addItem(player); // füge Player in den Pool hinzu
 
+    player->setPos(QPointF(0, height() / 2));
+
+    connect(player, &Player::gameOver, [=]() {
+            this->stopGame();
+        });
+
     hud = new HUD(); // initialisere das HUD
     addItem(hud); // füge es hinzu
+
+    hud->setPos(QPointF(0, 0));
 
     //PillarItem* pillar = new PillarItem(true); // Hinderniss wird deklariert und initialisiert
     //addItem(pillar); // Hinderniss in die Scene hinzufügen
@@ -52,10 +63,11 @@ void Scene::startGame()
         // Player wird zurück auf anfangs Position gesetzt.
         //player->setX(10);
 
+        player->setPos(QPointF(0, height() / 2));
         player->activatePlayer(); //Methode von Player -> activatePlayer wird ausgeführt
         pillarGeneratorTimer->start(800); //Timer für die Pillar generierung wird gestartet
 
-        highscore = 0;   // Highscore wird auf 0 zurückgesetzt
+        hud->setScorePoints(0);   // Highscore wird auf 0 zurückgesetzt
     }
 }
 

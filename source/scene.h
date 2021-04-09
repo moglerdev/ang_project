@@ -33,7 +33,6 @@ private:
     HUD *hud;
     QTimer * pillarGeneratorTimer;
 
-    int highscore = 0;
     bool isPlaying;
 
 protected:

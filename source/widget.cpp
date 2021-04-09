@@ -16,6 +16,10 @@ Widget::Widget(QWidget* parent)
     scene->setup(); // passt und richtet alle Objekt ein, für die erste Ausführung
 
     ui->graphicsView->setScene(scene); // Setzt generierte als aktuelle Scene 
+    ui->graphicsView->setBackgroundBrush(Qt::transparent);
+    ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
+    ui->graphicsView->setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
+
     this->setFixedSize(520, 620); // Setzt die Fenstergröße fest (nicht veränderbar)
 
     connect(scene, &Scene::returnCords, [=](QPointF cords) {
