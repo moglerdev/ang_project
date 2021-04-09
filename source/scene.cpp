@@ -4,8 +4,9 @@
 
 // Konstruktor von der Klasse Scene 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),
-    pillarGenTimer(new QTimer(this))
+    pillarGeneratorTimer(new QTimer(this))
 {
+    isPlaying = false;
 }
 
 void Scene::setup()
@@ -26,7 +27,7 @@ void Scene::setup()
     player = new Player(); // initialisiere Player
     addItem(player); // füge Player in den Pool hinzu
     
-    setUpPillarTimer(); // initialisere den Generator für die Hindernisse
+    setupGenerator(); // initialisere den Generator für die Hindernisse
 }
 
 void Scene::startGame()
@@ -49,7 +50,7 @@ void Scene::startGame()
         //player->setX(10);
 
         player->activatePlayer(); //Methode von Player -> activatePlayer wird ausgeführt
-        pillarGenTimer->start(800); //Timer für die Pillar generierung wird gestartet
+        pillarGeneratorTimer->start(800); //Timer für die Pillar generierung wird gestartet
 
         highscore = 0;   // Highscore wird auf 0 zurückgesetzt
     }
@@ -58,7 +59,7 @@ void Scene::startGame()
 void Scene::stopGame()
 {
     isPlaying = false;  // setze Spiel als beendet
-    pillarGenTimer->stop(); // stoppe den TImer für die Hindernisse
+    pillarGeneratorTimer->stop(); // stoppe den TImer für die Hindernisse
     player->disablePlayer(); // Deaktiviere den Spieler
 
     QList<QGraphicsItem *> objs = items(); // instanziere die Items die im Spiel sind als QListe
@@ -75,17 +76,18 @@ void Scene::addScore()
     hud->addScorePoints(1); // Score in Hud hinzufügen
 }
 
-void Scene::setUpPillarTimer()
+void Scene::setupGenerator()
 {
-    connect(pillarGenTimer, &QTimer::timeout, [=](){ // connect von Qt::QtMetaObject wird ausgeführt, 
+    connect(pillarGeneratorTimer, &QTimer::timeout, [=](){ // connect von Qt::QtMetaObject wird ausgeführt, 
         // wenn pillarGenTimer timout als Singal emitiert, wird diese lamda Funktion ausgeführt.
        if(!isPlaying){
            // wenn das Spiel nicht ausgeührt wird, soll der pillarGenTimer gestoppt werden
-           pillarGenTimer->stop();
+           pillarGeneratorTimer->stop();
        }else{
            // wenn das Spiel ausgeführt wird
            PillarItem * pillar = new PillarItem(); // Hinderniss wird deklariert und initialisiert
            addItem(pillar); // Hinderniss in die Scene hinzufügen
+
            connect(pillar, &PillarItem::collideWithPlayer, [=](){ // Signal collideWithPlayer verbinden
                 stopGame(); // Game soll gestoppt werden
            });

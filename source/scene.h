@@ -27,11 +27,11 @@ signals:
 
 public slots:
 private:
-    void setUpPillarTimer();
+    void setupGenerator();
 
     Player *player;
     HUD *hud;
-    QTimer * pillarGenTimer;
+    QTimer * pillarGeneratorTimer;
 
     int highscore = 0;
     bool isPlaying;
