@@ -17,7 +17,6 @@ public:
     /// </summary>
     enum MenuType {
         Start,
-        Pause,
         GameOver
     };
 
@@ -58,6 +57,9 @@ private:
     void updateScoreboard();
     // TODO Menu
     // TODO GameOver
+
+    QGraphicsItemGroup* gameOverGroup;
+    QGraphicsItemGroup* startMenu;
 
 };
 

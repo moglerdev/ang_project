@@ -11,12 +11,25 @@ HUD::HUD() :
 }
 
 void HUD::setMenu(MenuType menuType){
-    qDebug() << "Hello";
+    startMenu->setVisible(false);
+    gameOverGroup->setVisible(false);
+
+    switch (menuType) {
+        case MenuType::GameOver:
+            gameOverGroup->setVisible(true);
+            break;
+        case MenuType::Start:
+            startMenu->setVisible(true);
+            break;
+    }
     // TODO Set Menu Screen
 }
 
 void HUD::setGameOver(){
-    qDebug() << "Hello";
+    gameOverGroup = new QGraphicsItemGroup();
+    
+    QGraphicsTextItem* gameOverText = new QGraphicsTextItem("Game Over");
+    gameOverGroup->addToGroup(gameOverText);
     // TODO Set GameOver Screen
 }
 
