@@ -6,7 +6,7 @@ HUD::HUD() :
 {
     addToGroup(scoreboard);
 
-    scoreboard->setPos(100, 100);
+    scoreboard->setPos(0, 0);
     scoreboard->setDefaultTextColor(Qt::red);
 }
 
