@@ -1,4 +1,5 @@
 #include "hud.h"
+#include <string>
 
 HUD::HUD() :
     scoreboard(new QGraphicsTextItem("Score: 0"))
@@ -6,7 +7,7 @@ HUD::HUD() :
     addToGroup(scoreboard);
 
     scoreboard->setPos(100, 100);
-    scoreboard->setScale(100);
+    scoreboard->setDefaultTextColor(Qt::red);
 }
 
 void HUD::setMenu(MenuType menuType){
@@ -21,4 +22,14 @@ void HUD::setGameOver(){
 
 void HUD::addScorePoints(int add){
     scorePoints += add;
+    updateScoreboard();
+}
+
+void HUD::setScorePoints(int val) {
+    scorePoints = val;
+    updateScoreboard();
+}
+
+void HUD::updateScoreboard() {
+    scoreboard->setPlainText(("Score: " + std::to_string(scorePoints)).c_str());
 }

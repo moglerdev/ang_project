@@ -21,11 +21,11 @@ void Scene::setup()
 
     bgItem->setBrush(Qt::black); // Ändere die Hintergrundfarbe 
 
-    hud = new HUD(); // initialisere das HUD
-    addItem(hud); // füge es hinzu
-
     player = new Player(); // initialisiere Player
     addItem(player); // füge Player in den Pool hinzu
+
+    hud = new HUD(); // initialisere das HUD
+    addItem(hud); // füge es hinzu
 
     //PillarItem* pillar = new PillarItem(true); // Hinderniss wird deklariert und initialisiert
     //addItem(pillar); // Hinderniss in die Scene hinzufügen
