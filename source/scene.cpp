@@ -67,7 +67,7 @@ void Scene::startGame()
         player->activatePlayer(); //Methode von Player -> activatePlayer wird ausgeführt
         pillarGeneratorTimer->start(800); //Timer für die Pillar generierung wird gestartet
 
-        highscore = 0;   // Highscore wird auf 0 zurückgesetzt
+        hud->setScorePoints(0);   // Highscore wird auf 0 zurückgesetzt
     }
 }
 
