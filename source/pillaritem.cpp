@@ -13,13 +13,21 @@ PillarItem::PillarItem() :
 {
     addToGroup(upP);
     addToGroup(downP);
-    addToGroup(scoreBox);
+    //addToGroup(scoreBox);
 
-    upP->setPos(QPointF(0,0) - QPointF(upP->boundingRect().width()/2,
-                                       upP->boundingRect().height()+60));
+    upP->setPos(
+        QPointF(upP->boundingRect().width() / -2,
+            (-1 * downP->boundingRect().height()) + 100
+        )
+    );
+
     downP->setRotation(180.0f);
-    downP->setPos(QPointF(downP->boundingRect().width()/2,
-                          downP->boundingRect().height()+60));
+    downP->setPos(
+        QPointF(downP->boundingRect().width() / 2,
+            (downP->boundingRect().height()) + 300
+        )
+    );
+
     //DEBUG
     scoreBox->setBrush(Qt::red);
 
