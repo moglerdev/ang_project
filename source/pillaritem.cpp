@@ -46,7 +46,7 @@ void PillarItem::startAnimation(){
     yPos = QRandomGenerator::global()->bounded(150);
     int randXPos = QRandomGenerator::global()->bounded(200);
 
-    setPos(QPoint(0,0) + QPoint(260 + randXPos, yPos));
+    setPos(QPoint(0,0) + QPoint(500 + randXPos, yPos));
 
     moveAnimation = new QPropertyAnimation(this, "x", this);
 
@@ -55,9 +55,9 @@ void PillarItem::startAnimation(){
         delete this;
     });
 
-    moveAnimation->setStartValue(260 + randXPos);
+    moveAnimation->setStartValue(500 + randXPos);
     moveAnimation->setDuration(1500);
-    moveAnimation->setEndValue(-260);
+    moveAnimation->setEndValue(-20);
     moveAnimation->setEasingCurve(QEasingCurve::Linear);
 
     moveAnimation->start();
