@@ -15,7 +15,6 @@ void Scene::setup()
     //QGraphicsPixmapItem * bgItem = new QGraphicsPixmapItem(
     //            bg.scaled(this->sceneRect().width(), this->sceneRect().height()));
 
-    
     QGraphicsRectItem* bgItem = new QGraphicsRectItem(-20, -20, 1000, 1000); // Instanziere bgItem für den Hintergrund als Rectangle
     addItem(bgItem); //Füge bgItem in die Itempool hinzu
 
@@ -36,7 +35,7 @@ void Scene::setup()
             this->stopGame();
         });
 
-    hud = new HUD(); // initialisere das HUD
+    hud = new HUD(this); // initialisere das HUD
     addItem(hud); // füge es hinzu
 
     hud->setPos(QPointF(0, 0));
@@ -132,9 +131,6 @@ void Scene::keyPressEvent(QKeyEvent *eve)
             // wenn Spacebar drückt wurde, 
             player->flyUp(); // player soll hochfliegen
         }
-    }else{
-        // wird nicht gespielt, soll das Spiel gestartet werden
-        this->startGame();
     }
     //QGraphicsScene::keyPressEvent(eve);
 }
@@ -148,8 +144,6 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *eve)
             // Wenn linke Maustaste gedrückt
             player->flyUp(); // player hochdruck
         }
-    }else{
-        this->startGame(); // Spiel soll gestartet werden
     }
     //QGraphicsScene::mousePressEvent(eve);
 }
