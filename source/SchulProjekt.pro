@@ -12,6 +12,7 @@ SOURCES += \
     button.cpp \
     hud.cpp \
     main.cpp \
+    menu.cpp \
     pillaritem.cpp \
     player.cpp \
     scene.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
 HEADERS += \
     button.h \
     hud.h \
+    menu.h \
     pillaritem.h \
     player.h \
     scene.h \

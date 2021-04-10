@@ -204,6 +204,7 @@
     </QtUic>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pillaritem.cpp" />
@@ -251,6 +252,9 @@
     <None Include="Images\player.png" />
     <QtRcc Include="ressource.qrc">
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="button.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
