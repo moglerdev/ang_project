@@ -4,6 +4,7 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsTextItem>
 
+#include "button.h"
 
 /// <summary>
 /// Klasse für die Menü Anzeige, Scoreboard, etc.
@@ -23,7 +24,7 @@ public:
     /// <summary>
     /// Konstruktor
     /// </summary>
-    explicit HUD(); 
+    explicit HUD(QGraphicsScene* scene);
     /// <summary>
     /// Zeigt Menü an
     /// </summary>
@@ -45,6 +46,8 @@ public:
     void setScorePoints(int val);
 
 signals:
+    void startGame();
+    void closeGame();
 
 private:
     int scorePoints = 0; // aktuelles Punktzahl
