@@ -24,6 +24,9 @@ void Scene::setup()
     QPen p = QPen(Qt::transparent, 1);
     bgItem->setPen(p);
 
+    pillars = new QGraphicsItemGroup();
+    addItem(pillars);
+
     player = new Player(); // initialisiere Player
     addItem(player); // füge Player in den Pool hinzu
 
@@ -51,7 +54,7 @@ void Scene::startGame()
         // isPlayer wird auf "true" gesetzt
         isPlaying = true;
 
-        QList<QGraphicsItem *> objs = items(); // Alle Items in der Scene werden in einer Liste gespeichert
+        QList<QGraphicsItem *> objs = pillars->childItems(); // Alle Items in der Scene werden in einer Liste gespeichert
         foreach(QGraphicsItem * obj, objs) { //Alle Items einzeln durchgegangen
             PillarItem * item = dynamic_cast<PillarItem*>(obj); //über c++ funktion dynamic_cast wird es versucht in PillaerItem Obj umcasten
             if(item) {  // Prüft ob der "dynamic_cast" erfolgreich war,
@@ -101,7 +104,7 @@ void Scene::setupGenerator()
        }else{
            // wenn das Spiel ausgeführt wird
            PillarItem * pillar = new PillarItem(); // Hinderniss wird deklariert und initialisiert
-           addItem(pillar); // Hinderniss in die Scene hinzufügen
+           pillars->addToGroup(pillar); // Hinderniss in die Scene hinzufügen
 
            connect(pillar, &PillarItem::collideWithPlayer, [=](){ // Signal collideWithPlayer verbinden
                 stopGame(); // Game soll gestoppt werden

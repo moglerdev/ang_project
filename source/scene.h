@@ -31,6 +31,7 @@ private:
 
     Player *player;
     HUD *hud;
+    QGraphicsItemGroup* pillars;
     QTimer * pillarGeneratorTimer;
 
     bool isPlaying;
