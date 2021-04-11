@@ -4,6 +4,8 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsTextItem>
 
+#include "button.h"
+#include "menu.h"
 
 /// <summary>
 /// Klasse für die Menü Anzeige, Scoreboard, etc.
@@ -23,12 +25,7 @@ public:
     /// <summary>
     /// Konstruktor
     /// </summary>
-    explicit HUD(); 
-    /// <summary>
-    /// Zeigt Menü an
-    /// </summary>
-    /// <param name="menuType">Welches Menü angezeigt werden soll; HUD::MenuType</param>
-    void setMenu(MenuType menuType);
+    explicit HUD(QGraphicsScene* scene);
     /// <summary>
     /// Zeigt GameOver screen
     /// </summary>
@@ -45,6 +42,8 @@ public:
     void setScorePoints(int val);
 
 signals:
+    void startGame();
+    void closeGame();
 
 private:
     int scorePoints = 0; // aktuelles Punktzahl
@@ -58,9 +57,13 @@ private:
     // TODO Menu
     // TODO GameOver
 
-    QGraphicsItemGroup* gameOverGroup;
-    QGraphicsItemGroup* startMenu;
+    Menu* gameOverGroup;
+    Menu* startMenu;
 
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) ;
+    void keyPressEvent(QKeyEvent* eve);
+    void mousePressEvent(QGraphicsSceneMouseEvent* eve);
 };
 
 #endif // HUD_H

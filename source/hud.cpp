@@ -1,36 +1,49 @@
 #include "hud.h"
 #include <string>
 
-HUD::HUD() :
-    scoreboard(new QGraphicsTextItem("Score: 0"))
+HUD::HUD(QGraphicsScene* scene) :
+    scoreboard(new QGraphicsTextItem("Score: 0")),
+    gameOverGroup(new Menu(scene, "Game Over")),
+    startMenu(new Menu(scene, "Flappy Bird"))
 {
+
     addToGroup(scoreboard);
+    addToGroup(startMenu);
+    addToGroup(gameOverGroup);
+
+    gameOverGroup->setVisible(false);
+    gameOverGroup->setEnabled(false);
+
+    startMenu->setEnabled(true);
 
     scoreboard->setPos(0, 0);
     scoreboard->setDefaultTextColor(Qt::red);
-}
 
-void HUD::setMenu(MenuType menuType){
-    startMenu->setVisible(false);
-    gameOverGroup->setVisible(false);
+    
+    auto closeF = [=]() {
+        gameOverGroup->setVisible(false);
+        startMenu->setVisible(false);
+        gameOverGroup->setEnabled(false);
+        emit closeGame();
+    };
+    auto startF = [=]() {
+        gameOverGroup->setVisible(false);
+        startMenu->setVisible(false);
+        gameOverGroup->setEnabled(false);
+        emit startGame();
+    };
+    connect(gameOverGroup->addBtn("Restart"), &Button::btnClicked, startF);
 
-    switch (menuType) {
-        case MenuType::GameOver:
-            gameOverGroup->setVisible(true);
-            break;
-        case MenuType::Start:
-            startMenu->setVisible(true);
-            break;
-    }
-    // TODO Set Menu Screen
+    connect(gameOverGroup->addBtn("Beenden"), &Button::btnClicked, closeF);
+    
+    connect(startMenu->addBtn("Starten"), &Button::btnClicked, startF);
+
+    connect(startMenu->addBtn("Beenden"), &Button::btnClicked, closeF);
 }
 
 void HUD::setGameOver(){
-    gameOverGroup = new QGraphicsItemGroup();
-    
-    QGraphicsTextItem* gameOverText = new QGraphicsTextItem("Game Over");
-    gameOverGroup->addToGroup(gameOverText);
-    // TODO Set GameOver Screen
+    gameOverGroup->setVisible(true);
+    gameOverGroup->setEnabled(true);
 }
 
 void HUD::addScorePoints(int add){
@@ -45,4 +58,32 @@ void HUD::setScorePoints(int val) {
 
 void HUD::updateScoreboard() {
     scoreboard->setPlainText(("Score: " + std::to_string(scorePoints)).c_str());
+}
+
+// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+void HUD::mouseMoveEvent(QGraphicsSceneMouseEvent* eve)
+{
+    QGraphicsItemGroup::mousePressEvent(eve);
+}
+
+// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+void HUD::keyPressEvent(QKeyEvent* eve)
+{
+    if (startMenu->isVisible()) {
+        
+    }
+    if (gameOverGroup->isVisible()) {
+
+    }
+}
+
+// Wird von Qt aufgerufen, wenn eine Maustaste gedrückt wird.
+void HUD::mousePressEvent(QGraphicsSceneMouseEvent* eve)
+{
+    if (startMenu->isVisible()) {
+        startMenu->mousePressed(eve);
+    }
+    if (gameOverGroup->isVisible()) {
+        startMenu->mousePressed(eve);
+    }
 }
