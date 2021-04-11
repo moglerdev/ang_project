@@ -27,11 +27,6 @@ public:
     /// </summary>
     explicit HUD(QGraphicsScene* scene);
     /// <summary>
-    /// Zeigt Menü an
-    /// </summary>
-    /// <param name="menuType">Welches Menü angezeigt werden soll; HUD::MenuType</param>
-    void setMenu(MenuType menuType);
-    /// <summary>
     /// Zeigt GameOver screen
     /// </summary>
     void setGameOver();

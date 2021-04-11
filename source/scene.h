@@ -5,6 +5,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include <QTimer>
+#include <QCoreApplication>
 
 #include "pillaritem.h" 
 #include "player.h"
@@ -19,8 +20,9 @@ public:
     void setup();
 
     void startGame();
-    void stopGame();
+    void gameOver();
     void addScore();
+    void closeGame();
 
 signals:
     void returnCords(QPointF pos);

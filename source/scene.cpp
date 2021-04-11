@@ -33,14 +33,14 @@ void Scene::setup()
     player->setPos(QPointF(0, height() / 2));
 
     connect(player, &Player::gameOver, [=]() {
-            this->stopGame();
+            this->gameOver();
         });
 
     hud = new HUD(this); // initialisere das HUD
     addItem(hud); // füge es hinzu
 
     connect(hud, &HUD::closeGame, [=]() {
-        stopGame();
+        closeGame();
         });
     connect(hud, &HUD::startGame, [=]() {
         startGame();
@@ -81,19 +81,25 @@ void Scene::startGame()
     } 
 }
 
-void Scene::stopGame()
+void Scene::gameOver()
 {
+    hud->setGameOver();
     isPlaying = false;  // setze Spiel als beendet
     pillarGeneratorTimer->stop(); // stoppe den TImer für die Hindernisse
     player->disablePlayer(); // Deaktiviere den Spieler
 
-    QList<QGraphicsItem *> objs = items(); // instanziere die Items die im Spiel sind als QListe
-    foreach(QGraphicsItem * obj, objs){ // gehe alle einzelne Items durch
+    QList<QGraphicsItem*> objs = items(); // instanziere die Items die im Spiel sind als QListe
+    foreach(QGraphicsItem * obj, objs) { // gehe alle einzelne Items durch
         PillarItem* pillar = dynamic_cast<PillarItem*>(obj); // Versuche die Items als PillarItem zu konvetiere
-        if(pillar){ // Wenn es konvertiert wurde, 
+        if (pillar) { // Wenn es konvertiert wurde, 
             pillar->stop(); // lösche den Pillar / Hinderniss
         }
     }
+}
+
+void Scene::closeGame()
+{
+    QCoreApplication::quit();
 }
 
 void Scene::addScore()
@@ -114,7 +120,7 @@ void Scene::setupGenerator()
            pillars->addToGroup(pillar); // Hinderniss in die Scene hinzufügen
 
            connect(pillar, &PillarItem::collideWithPlayer, [=](){ // Signal collideWithPlayer verbinden
-                stopGame(); // Game soll gestoppt werden
+               gameOver(); // Game soll gestoppt werden
            });
            connect(pillar, &PillarItem::playerHitsScore, [=](){ // Signal playerHitsScore verbinden
                 addScore(); // Scoreboard soll einpunkt hinzugefügt werden

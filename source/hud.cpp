@@ -31,33 +31,19 @@ HUD::HUD(QGraphicsScene* scene) :
         startMenu->setVisible(false);
         gameOverGroup->setEnabled(false);
         emit startGame();
-    };/*
+    };
     connect(gameOverGroup->addBtn("Restart"), &Button::btnClicked, startF);
 
     connect(gameOverGroup->addBtn("Beenden"), &Button::btnClicked, closeF);
-    */
+    
     connect(startMenu->addBtn("Starten"), &Button::btnClicked, startF);
 
     connect(startMenu->addBtn("Beenden"), &Button::btnClicked, closeF);
 }
 
-void HUD::setMenu(MenuType menuType){
-    startMenu->setVisible(false);
-    gameOverGroup->setVisible(false);
-
-    switch (menuType) {
-        case MenuType::GameOver:
-            gameOverGroup->setVisible(true);
-            break;
-        case MenuType::Start:
-            startMenu->setVisible(true);
-            break;
-    }
-    // TODO Set Menu Screen
-}
-
 void HUD::setGameOver(){
-    // TODO Set GameOver Screen
+    gameOverGroup->setVisible(true);
+    gameOverGroup->setEnabled(true);
 }
 
 void HUD::addScorePoints(int add){
