@@ -8,6 +8,9 @@ Menu::Menu(QGraphicsScene* scene, const QString& textTitle) :
     addToGroup(btnGroup);
     addToGroup(title);
 
+    this->boundingRect().setWidth(scene->width());
+    this->boundingRect().setHeight(scene->height());
+
     title->setFont(QFont("Arial", TITLE_FONT_SIZE));
     int t_x = (scene->width() / 2) - title->boundingRect().width() / 2;
     title->setPos(t_x, 0);
@@ -49,3 +52,40 @@ Button* Menu::addBtn(const QString& text, const QColor& textColor, const QBrush&
         emit closeGame();
         });
     */
+    // Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+void Menu::mouseMoveEvent(QGraphicsSceneMouseEvent* eve)
+{
+    QGraphicsItemGroup::mouseMoveEvent(eve);
+}
+
+// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+void Menu::keyPressEvent(QKeyEvent* eve)
+{
+    QGraphicsItemGroup::keyPressEvent(eve);
+}
+
+// Wird von Qt aufgerufen, wenn eine Maustaste gedrückt wird.
+void Menu::mousePressEvent(QGraphicsSceneMouseEvent* eve)
+{
+    QGraphicsItemGroup::mousePressEvent(eve);
+}
+
+void Menu::mousePressed(QGraphicsSceneMouseEvent* eve) {
+    foreach(QGraphicsItem * item, btnGroup->childItems())
+    {
+        Button* btn = dynamic_cast<Button*>(item);
+        if (btn) {
+            QPointF mPos = eve->scenePos();
+            QPointF topLeft = mapToScene(btn->pos());
+            QPointF btmRight = btn->mapToScene(btn->boundingRect().bottomRight());
+
+            if ( topLeft.x() < mPos.x() &&
+                topLeft.y() < mPos.y() &&
+                btmRight.x() > mPos.x() &&
+                btmRight.y() > mPos.y()) {
+                btn->mousePressed(eve);
+            }
+        }
+    }
+}
+/**/

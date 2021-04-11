@@ -5,6 +5,7 @@
 #include <QGraphicsItemGroup>
 #include <QFont>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 
 #include "button.h"
 
@@ -20,12 +21,19 @@ public:
 
     Button* addBtn(const QString& text, const QColor& textColor = Qt::black, const QBrush& background = QBrush(Qt::gray));
 
+    void mousePressed(QGraphicsSceneMouseEvent* eve);
+
 signals:
 
 private:
     QGraphicsScene* curScene;
     QGraphicsTextItem* title;
     QGraphicsItemGroup* btnGroup;
+
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent);
+    void keyPressEvent(QKeyEvent* eve);
+    void mousePressEvent(QGraphicsSceneMouseEvent* eve);
 };
 
 #endif // MENU_H

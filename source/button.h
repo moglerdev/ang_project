@@ -7,6 +7,7 @@
 #include <QGraphicsItemGroup>
 #include <QPropertyAnimation>
 #include <QGraphicsPixmapItem>
+#include <QGraphicsSceneMouseEvent>
 
 class Button : public QObject, public QGraphicsItemGroup
 {
@@ -20,6 +21,8 @@ public:
 
     void setSize(const QPoint& size);
 
+    void mousePressed(QGraphicsSceneMouseEvent* eve);
+
 signals:
     void btnClicked();
     void mouseEnter();
@@ -31,17 +34,6 @@ private:
 
     void setTextPos(const QPoint& newSize);
 
-protected:
-
-    // QGraphicsItem interface
-//public:
-    //QRectF boundingRect() const;
-    //void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-protected:
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 };
 
 #endif // BUTTON_H

@@ -65,6 +65,10 @@ private:
     Menu* gameOverGroup;
     Menu* startMenu;
 
+protected:
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) ;
+    void keyPressEvent(QKeyEvent* eve);
+    void mousePressEvent(QGraphicsSceneMouseEvent* eve);
 };
 
 #endif // HUD_H

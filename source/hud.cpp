@@ -8,10 +8,13 @@ HUD::HUD(QGraphicsScene* scene) :
 {
 
     addToGroup(scoreboard);
-    addToGroup(gameOverGroup);
     addToGroup(startMenu);
+    addToGroup(gameOverGroup);
 
     gameOverGroup->setVisible(false);
+    gameOverGroup->setEnabled(false);
+
+    startMenu->setEnabled(true);
 
     scoreboard->setPos(0, 0);
     scoreboard->setDefaultTextColor(Qt::red);
@@ -20,11 +23,13 @@ HUD::HUD(QGraphicsScene* scene) :
     auto closeF = [=]() {
         gameOverGroup->setVisible(false);
         startMenu->setVisible(false);
+        gameOverGroup->setEnabled(false);
         emit closeGame();
     };
     auto startF = [=]() {
         gameOverGroup->setVisible(false);
         startMenu->setVisible(false);
+        gameOverGroup->setEnabled(false);
         emit startGame();
     };/*
     connect(gameOverGroup->addBtn("Restart"), &Button::btnClicked, startF);
@@ -67,4 +72,32 @@ void HUD::setScorePoints(int val) {
 
 void HUD::updateScoreboard() {
     scoreboard->setPlainText(("Score: " + std::to_string(scorePoints)).c_str());
+}
+
+// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+void HUD::mouseMoveEvent(QGraphicsSceneMouseEvent* eve)
+{
+    QGraphicsItemGroup::mousePressEvent(eve);
+}
+
+// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+void HUD::keyPressEvent(QKeyEvent* eve)
+{
+    if (startMenu->isVisible()) {
+        
+    }
+    if (gameOverGroup->isVisible()) {
+
+    }
+}
+
+// Wird von Qt aufgerufen, wenn eine Maustaste gedrückt wird.
+void HUD::mousePressEvent(QGraphicsSceneMouseEvent* eve)
+{
+    if (startMenu->isVisible()) {
+        startMenu->mousePressed(eve);
+    }
+    if (gameOverGroup->isVisible()) {
+        startMenu->mousePressed(eve);
+    }
 }

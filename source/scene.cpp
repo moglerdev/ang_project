@@ -6,6 +6,7 @@
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),
     pillarGeneratorTimer(new QTimer(this))
 {
+    itemsBoundingRect();
     isPlaying = false;
 }
 
@@ -41,7 +42,7 @@ void Scene::setup()
     connect(hud, &HUD::closeGame, [=]() {
         stopGame();
         });
-    connect(hud, &HUD::closeGame, [=]() {
+    connect(hud, &HUD::startGame, [=]() {
         startGame();
         });
 
@@ -77,7 +78,7 @@ void Scene::startGame()
         pillarGeneratorTimer->start(800); //Timer für die Pillar generierung wird gestartet
 
         hud->setScorePoints(0);   // Highscore wird auf 0 zurückgesetzt
-    }
+    } 
 }
 
 void Scene::stopGame()
@@ -121,6 +122,7 @@ void Scene::setupGenerator()
        }
     });
 }
+
 
 // Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
 void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* eve)
