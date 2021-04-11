@@ -38,6 +38,13 @@ void Scene::setup()
     hud = new HUD(this); // initialisere das HUD
     addItem(hud); // füge es hinzu
 
+    connect(hud, &HUD::closeGame, [=]() {
+        stopGame();
+        });
+    connect(hud, &HUD::closeGame, [=]() {
+        startGame();
+        });
+
     hud->setPos(QPointF(0, 0));
 
     //PillarItem* pillar = new PillarItem(true); // Hinderniss wird deklariert und initialisiert
@@ -116,10 +123,10 @@ void Scene::setupGenerator()
 }
 
 // Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
-void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent* eve)
 {
-    emit returnCords(mouseEvent->scenePos());
-    //QGraphicsScene::keyPressEvent(eve);
+    emit returnCords(eve->scenePos());
+    QGraphicsScene::mouseMoveEvent(eve);
 }
 
 // Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
@@ -132,7 +139,7 @@ void Scene::keyPressEvent(QKeyEvent *eve)
             player->flyUp(); // player soll hochfliegen
         }
     }
-    //QGraphicsScene::keyPressEvent(eve);
+    QGraphicsScene::keyPressEvent(eve);
 }
 
 // Wird von Qt aufgerufen, wenn eine Maustaste gedrückt wird.
@@ -145,5 +152,5 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *eve)
             player->flyUp(); // player hochdruck
         }
     }
-    //QGraphicsScene::mousePressEvent(eve);
+    QGraphicsScene::mousePressEvent(eve);
 }

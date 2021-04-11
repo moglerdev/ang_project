@@ -68,6 +68,9 @@
     <ClCompile Include="button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="hud.h">
@@ -86,6 +89,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="button.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="menu.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

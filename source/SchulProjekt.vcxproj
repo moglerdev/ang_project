@@ -207,6 +207,7 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="hud.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="menu.cpp" />
     <ClCompile Include="pillaritem.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="scene.cpp" />
@@ -255,6 +256,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="button.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

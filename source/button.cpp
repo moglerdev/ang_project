@@ -39,14 +39,14 @@ void Button::setTextPos(const QPoint& newSize) {
 	textItem->setPos(t_x, t_y);
 }
 
-void Button::mousePressEvent(QGraphicsSceneMouseEvent* eve) {
-	emit btnClicked(eve);
+void Button::mousePressEvent(QGraphicsSceneMouseEvent* event) {
+	emit btnClicked();
 }
 
-void Button::hoverEnterEvent(QGraphicsSceneHoverEvent* eve) {
-	emit mouseEnter(eve);
+void Button::hoverEnterEvent(QGraphicsSceneHoverEvent* event) {
+	emit mouseEnter();
 }
 
-void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent* eve) {
-	emit mouseLeave(eve);
+void Button::hoverLeaveEvent(QGraphicsSceneHoverEvent* event) {
+	emit mouseLeave();
 }

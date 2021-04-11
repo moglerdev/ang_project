@@ -5,6 +5,7 @@
 #include <QGraphicsTextItem>
 
 #include "button.h"
+#include "menu.h"
 
 /// <summary>
 /// Klasse für die Menü Anzeige, Scoreboard, etc.
@@ -61,8 +62,8 @@ private:
     // TODO Menu
     // TODO GameOver
 
-    QGraphicsItemGroup* gameOverGroup;
-    QGraphicsItemGroup* startMenu;
+    Menu* gameOverGroup;
+    Menu* startMenu;
 
 };
 
