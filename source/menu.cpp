@@ -34,37 +34,19 @@ Button* Menu::addBtn(const QString& text, const QColor& textColor, const QBrush&
     return btn;
 }
 
-
-/*
-
-    Button* btnRestart = new Button(f, "Neuer versuch?", Qt::black, QBrush(Qt::green));
-    gameOverGroup->addToGroup(btnRestart);
-    btnRestart->setPos(0, 100);
-
-    Button* btnClose = new Button(f, "Beenden", Qt::black, QBrush(Qt::red));
-    gameOverGroup->addToGroup(btnClose);
-    btnClose->setPos(0, 200);
-
-    connect(btnRestart, &Button::btnClicked, [=]() {
-        emit startGame();
-        });
-    connect(btnClose, &Button::btnClicked, [=]() {
-        emit closeGame();
-        });
-    */
-    // Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+// Wird von Qt aufgerufen, wenn eine Taste gedrÃ¼ckt wird.
 void Menu::mouseMoveEvent(QGraphicsSceneMouseEvent* eve)
 {
     QGraphicsItemGroup::mouseMoveEvent(eve);
 }
 
-// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+// Wird von Qt aufgerufen, wenn eine Taste gedrÃ¼ckt wird.
 void Menu::keyPressEvent(QKeyEvent* eve)
 {
     QGraphicsItemGroup::keyPressEvent(eve);
 }
 
-// Wird von Qt aufgerufen, wenn eine Maustaste gedrückt wird.
+// Wird von Qt aufgerufen, wenn eine Maustaste gedrÃ¼ckt wird.
 void Menu::mousePressEvent(QGraphicsSceneMouseEvent* eve)
 {
     QGraphicsItemGroup::mousePressEvent(eve);

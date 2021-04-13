@@ -8,14 +8,14 @@
 #include "menu.h"
 
 /// <summary>
-/// Klasse für die Menü Anzeige, Scoreboard, etc.
+/// Klasse fÃ¼r die MenÃ¼ Anzeige, Scoreboard, etc.
 /// </summary>
 class HUD : public QObject, public QGraphicsItemGroup
 {
     Q_OBJECT // The Q_OBJECT macro must appear in the private section of a class definition that declares its own signals and slots or that uses other services provided by Qt's meta-object system.
 public:
     /// <summary>
-    /// Für die Menüanzeige 
+    /// FÃ¼r die MenÃ¼anzeige 
     /// </summary>
     enum MenuType {
         Start,
@@ -31,14 +31,14 @@ public:
     /// </summary>
     void setGameOver();
     /// <summary>
-    /// Fügt Punkte zum Scoreboard hinzu
+    /// FÃ¼gt Punkte zum Scoreboard hinzu
     /// </summary>
-    /// <param name="add">wie viele Punkte sollen hinzugefügt werden</param>
+    /// <param name="add">wie viele Punkte sollen hinzugefÃ¼gt werden</param>
     void addScorePoints(int add);
     /// <summary>
-    /// Fügt Punkte zum Scoreboard hinzu
+    /// FÃ¼gt Punkte zum Scoreboard hinzu
     /// </summary>
-    /// <param name="add">wie viele Punkte sollen hinzugefügt werden</param>
+    /// <param name="add">wie viele Punkte sollen hinzugefÃ¼gt werden</param>
     void setScorePoints(int val);
 
 signals:
@@ -47,17 +47,17 @@ signals:
 
 private:
     int scorePoints = 0; // aktuelles Punktzahl
-    QGraphicsTextItem* scoreboard; // GrahicsItem für die Punkteanzeige als Text
+    QGraphicsTextItem* scoreboard; // GrahicsItem fÃ¼r die Punkteanzeige als Text
 
     /// <summary>
-    /// Fügt Punkte zum Scoreboard hinzu
+    /// FÃ¼gt Punkte zum Scoreboard hinzu
     /// </summary>
-    /// <param name="add">wie viele Punkte sollen hinzugefügt werden</param>
+    /// <param name="add">wie viele Punkte sollen hinzugefÃ¼gt werden</param>
     void updateScoreboard();
     // TODO Menu
     // TODO GameOver
 
-    Menu* gameOverGroup;
+    Menu* gameOverMenu;
     Menu* startMenu;
 
 protected:

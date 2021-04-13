@@ -11,16 +11,16 @@ Widget::Widget(QWidget* parent)
 {
     ui->setupUi(this); // richtet die UI ein, mit dem speziellen Widget 
     scene = new Scene(this); // instanziere die Scene mit dem Paramter "sich selbst"
-    scene->setSceneRect(0, 0, 490, 590); // Setzt die Größe und Position der Scene
+    scene->setSceneRect(0, 0, 490, 590); // Setzt die GrÃ¶ÃŸe und Position der Scene
 
-    scene->setup(); // passt und richtet alle Objekt ein, für die erste Ausführung
+    scene->setup(); // passt und richtet alle Objekt ein, fÃ¼r die erste AusfÃ¼hrung
 
     ui->graphicsView->setScene(scene); // Setzt generierte als aktuelle Scene 
     ui->graphicsView->setBackgroundBrush(Qt::transparent);
     ui->graphicsView->setCacheMode(QGraphicsView::CacheBackground);
     ui->graphicsView->setOptimizationFlag(QGraphicsView::DontAdjustForAntialiasing);
 
-    this->setFixedSize(520, 620); // Setzt die Fenstergröße fest (nicht veränderbar)
+    this->setFixedSize(520, 620); // Setzt die FenstergrÃ¶ÃŸe fest (nicht verÃ¤nderbar)
 
     connect(scene, &Scene::returnCords, [=](QPointF cords) {
         std::string t = "Cords=> X:" + std::to_string(cords.x()) + "| Y:" + std::to_string(cords.y());
@@ -30,5 +30,5 @@ Widget::Widget(QWidget* parent)
 
 Widget::~Widget()
 {
-    delete ui; // Wenn der Desktrutor ausgelöst wird, soll die UI (hart) gelöscht werden
+    delete ui; // Wenn der Desktrutor ausgelÃ¶st wird, soll die UI (hart) gelÃ¶scht werden
 }

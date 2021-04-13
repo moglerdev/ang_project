@@ -16,7 +16,7 @@
 #define GROUND_POS 588
 
 /// <summary>
-/// Klasse für den Spieler
+/// Klasse fÃ¼r den Spieler
 /// </summary>
 class Player : public QObject, public QGraphicsItemGroup
 {

@@ -19,7 +19,7 @@ public:
     explicit PillarItem(bool stopAnimation = false);
     ~PillarItem();
     /// <summary>
-    /// Gibt aktuelle Position der X-Achse zurück
+    /// Gibt aktuelle Position der X-Achse zurÃ¼ck
     /// </summary>
     /// <returns>Position von X als qreal</returns>
     qreal getX() const;
@@ -30,17 +30,17 @@ public:
 
 signals:
     /// <summary>
-    /// Signal das Spieler berührt wurde
+    /// Signal das Spieler berÃ¼hrt wurde
     /// </summary>
     void collideWithPlayer();
     /// <summary>
-    /// Signal das Spieler ScoreBox berührt hat
+    /// Signal das Spieler ScoreBox berÃ¼hrt hat
     /// </summary>
     void playerHitsScore();
 
 public slots:
     /// <summary>
-    /// Slot für das Setzen der X Achse
+    /// Slot fÃ¼r das Setzen der X Achse
     /// </summary>
     void setX(qreal x);
 
@@ -50,26 +50,26 @@ private:
     /// </summary>
     void startAnimation();
     /// <summary>
-    /// Prüft ob der Spieler Röhre berührt hat
+    /// PrÃ¼ft ob der Spieler RÃ¶hre berÃ¼hrt hat
     /// </summary>
-    /// <returns>Wenn Spieler berührt = true; wenn nicht = false</returns>
+    /// <returns>Wenn Spieler berÃ¼hrt = true; wenn nicht = false</returns>
     bool hitPlayerPillar();
     /// <summary>
-    /// Prüft ob Spieler ScoreBox berührt
+    /// PrÃ¼ft ob Spieler ScoreBox berÃ¼hrt
     /// </summary>
-    /// <returns>Wenn Spieler berührt = true; wenn nicht = false</returns>
+    /// <returns>Wenn Spieler berÃ¼hrt = true; wenn nicht = false</returns>
     bool hitPlayerScore();
 
-    bool isScoreHitted; // Wurde Scorebox bereits berührt?
+    bool isScoreHitted; // Wurde Scorebox bereits berÃ¼hrt?
 
     qreal m_x;
     int yPos;
 
-    QGraphicsPixmapItem * upP;  // Röhre Oben
-    QGraphicsPixmapItem * downP; // Röhre Unten
-    QGraphicsRectItem* scoreBox; // ScoreBox ( für die Punkte )
+    QGraphicsPixmapItem * upP;  // RÃ¶hre Oben
+    QGraphicsPixmapItem * downP; // RÃ¶hre Unten
+    QGraphicsRectItem* scoreBox; // ScoreBox ( fÃ¼r die Punkte )
 
-    QPropertyAnimation * moveAnimation; // Animation für die Bewegung nach Links
+    QPropertyAnimation * moveAnimation; // Animation fÃ¼r die Bewegung nach Links
 };
 
 #endif // PILLARITEM_H

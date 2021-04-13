@@ -3,16 +3,15 @@
 
 HUD::HUD(QGraphicsScene* scene) :
     scoreboard(new QGraphicsTextItem("Score: 0")),
-    gameOverGroup(new Menu(scene, "Game Over")),
-    startMenu(new Menu(scene, "Flappy Bird"))
+    gameOverMenu(new Menu(scene, "Game Over")),
+    startMenu(new Menu(scene, "Clamsy Bird"))
 {
-
     addToGroup(scoreboard);
     addToGroup(startMenu);
-    addToGroup(gameOverGroup);
+    addToGroup(gameOverMenu);
 
-    gameOverGroup->setVisible(false);
-    gameOverGroup->setEnabled(false);
+    gameOverMenu->setVisible(false);
+    gameOverMenu->setEnabled(false);
 
     startMenu->setEnabled(true);
 
@@ -21,29 +20,30 @@ HUD::HUD(QGraphicsScene* scene) :
 
     
     auto closeF = [=]() {
-        gameOverGroup->setVisible(false);
+        gameOverMenu->setVisible(false);
         startMenu->setVisible(false);
-        gameOverGroup->setEnabled(false);
+        gameOverMenu->setEnabled(false);
         emit closeGame();
     };
     auto startF = [=]() {
-        gameOverGroup->setVisible(false);
+        gameOverMenu->setVisible(false);
         startMenu->setVisible(false);
-        gameOverGroup->setEnabled(false);
+        gameOverMenu->setEnabled(false);
         emit startGame();
     };
-    connect(gameOverGroup->addBtn("Restart"), &Button::btnClicked, startF);
-
-    connect(gameOverGroup->addBtn("Beenden"), &Button::btnClicked, closeF);
     
     connect(startMenu->addBtn("Starten"), &Button::btnClicked, startF);
 
     connect(startMenu->addBtn("Beenden"), &Button::btnClicked, closeF);
+
+    connect(gameOverMenu->addBtn("Restart"), &Button::btnClicked, startF);
+
+    connect(gameOverMenu->addBtn("Beenden"), &Button::btnClicked, closeF);
 }
 
 void HUD::setGameOver(){
-    gameOverGroup->setVisible(true);
-    gameOverGroup->setEnabled(true);
+    gameOverMenu->setVisible(true);
+    gameOverMenu->setEnabled(true);
 }
 
 void HUD::addScorePoints(int add){
@@ -60,30 +60,30 @@ void HUD::updateScoreboard() {
     scoreboard->setPlainText(("Score: " + std::to_string(scorePoints)).c_str());
 }
 
-// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+// Wird von Qt aufgerufen, wenn eine Taste gedrÃ¼ckt wird.
 void HUD::mouseMoveEvent(QGraphicsSceneMouseEvent* eve)
 {
     QGraphicsItemGroup::mousePressEvent(eve);
 }
 
-// Wird von Qt aufgerufen, wenn eine Taste gedrückt wird.
+// Wird von Qt aufgerufen, wenn eine Taste gedrÃ¼ckt wird.
 void HUD::keyPressEvent(QKeyEvent* eve)
 {
     if (startMenu->isVisible()) {
         
     }
-    if (gameOverGroup->isVisible()) {
+    if (gameOverMenu->isVisible()) {
 
     }
 }
 
-// Wird von Qt aufgerufen, wenn eine Maustaste gedrückt wird.
+// Wird von Qt aufgerufen, wenn eine Maustaste gedrÃ¼ckt wird.
 void HUD::mousePressEvent(QGraphicsSceneMouseEvent* eve)
 {
     if (startMenu->isVisible()) {
         startMenu->mousePressed(eve);
     }
-    if (gameOverGroup->isVisible()) {
+    if (gameOverMenu->isVisible()) {
         startMenu->mousePressed(eve);
     }
 }
